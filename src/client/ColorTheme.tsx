@@ -5,18 +5,18 @@ export const COLOR = {
   BLACK: "#262035",
   DARK_GREEN: "#0B4142",
   DANGER: "#B30000",
-  WHITE: "#e6edfd",
+  WHITE: "#ffffff",
 };
 
-import { createTheme } from "@mui/material/styles";
+// import { createTheme } from "@mui/material/styles";
 
-  export const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#FFE147",
-      },
-      secondary: {
-        main: "#edf2ff",
-      },
-    },
-  });
+// export const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: "#FFE147",
+//     },
+//     secondary: {
+//       main: "#edf2ff",
+//     },
+//   },
+// });
