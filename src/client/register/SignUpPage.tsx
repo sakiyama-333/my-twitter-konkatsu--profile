@@ -23,11 +23,11 @@ const SWrap = styled("div")({
 });
 
 const SButton = styled(Button)({
-  backgroundColor: COLOR.WHITE,
+  width: "100%",
   border: `1px solid ${COLOR.DARK_GREEN}`,
   borderRadius: "0px",
+  backgroundColor: COLOR.WHITE,
   color: COLOR.DARK_GREEN,
-  width: "100%",
 
   "&:hover": {
     backgroundColor: COLOR.ACCENT,
