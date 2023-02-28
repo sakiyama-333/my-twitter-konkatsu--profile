@@ -1,24 +1,17 @@
-import { ThemeProvider, createTheme } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import type { AppProps } from "next/app";
-import { theme } from "../client/ColorTheme";
+import { Footer } from "../client/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // const theme = createTheme({
-  //   components: {
-  //     MuiButton: {
-  //       defaultProps: {
-  //         fullWidth: true,
-  //       },
-  //     },
-  //   },
-  // });
   return (
-    <div>
-      {/* <ThemeProvider theme={theme}> */}
-      <h1>😀😀😀😀😀😀😀😀</h1>
-      <Component {...pageProps} />
-      {/* </ThemeProvider> */}
-    </div>
+    <>
+      <CssBaseline />
+      <div>
+        <h1>😀😀😀😀😀😀😀😀</h1>
+        <Component {...pageProps} />
+      </div>
+      <Footer />
+    </>
   );
 }
 
