@@ -17,41 +17,48 @@ const linkItems = [
 export const Footer: FC = () => {
   return (
     <Sfooter>
-      <Image src="/logo.svg" alt="logo image" width={120} height={70} />
-      <div className="linkItem">
-        {linkItems.map((item) => {
-          if (item !== "作った人") {
-            return (
-              <a href="#" key={item}>
-                {item}
-              </a>
-            );
-          } else {
-            return (
-              <a href="#" key={item}>
-                {item}
-                <TwitterIcon />
-              </a>
-            );
-          }
-        })}
-      </div>
-      <div className="logoAndCopyright">
-        <small>&copy; 2023 MY Twitter 婚活プロフィール</small>
-      </div>
+      <Slayout>
+        <Image src="/logo.svg" alt="logo image" width={120} height={70} />
+        <div className="linkItem">
+          {linkItems.map((item) => {
+            if (item !== "作った人") {
+              return (
+                <a href="#" key={item}>
+                  {item}
+                </a>
+              );
+            } else {
+              return (
+                <a href="#" key={item}>
+                  {item}
+                  <TwitterIcon />
+                </a>
+              );
+            }
+          })}
+        </div>
+        <div className="logoAndCopyright">
+          <small>&copy; 2023 MY Twitter 婚活プロフィール</small>
+        </div>
+      </Slayout>
     </Sfooter>
   );
 };
 
 const Sfooter = styled("footer")({
+  width: "100%",
+  backgroundColor: COLOR.MAIN_MINT_GREEN,
+  padding: "40px 0"
+});
+
+const Slayout = styled("div")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   gap: "24px",
-  width: "100%",
-  backgroundColor: COLOR.MAIN_MINT_GREEN,
-  padding: "40px",
+  width: "90%",
+  margin: "0 auto",
   "& > .linkItem": {
     display: "flex",
     flexWrap: "wrap",
