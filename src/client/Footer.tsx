@@ -1,5 +1,6 @@
 import TwitterIcon from "@mui/icons-material/Twitter";
 import styled from "@emotion/styled";
+import { FC } from "react";
 import Image from "next/image";
 import { COLOR } from "../client/ColorTheme";
 
@@ -13,7 +14,7 @@ const linkItems = [
   "職をください🙇",
 ] as const;
 
-export const Footer = () => {
+export const Footer: FC = () => {
   return (
     <Sfooter>
       <Image src="/logo.svg" alt="logo image" width={120} height={70} />
