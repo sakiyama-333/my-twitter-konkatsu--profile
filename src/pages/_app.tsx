@@ -11,7 +11,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Header />
       <Smain>
         <div>
-          <h1>😀😀😀😀😀😀😀😀</h1>
           <Component {...pageProps} />
         </div>
       </Smain>
