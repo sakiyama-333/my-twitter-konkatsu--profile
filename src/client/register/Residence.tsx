@@ -1,7 +1,8 @@
-import { UseFormRegister } from "react-hook-form";
-import { IUser } from "../../models/UserDataSchema";
 import { FC } from "react";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Controller, UseFormReturn } from "react-hook-form";
+import { MenuItem, TextField } from "@mui/material";
+
+import { IUser } from "../../models/UserDataSchema";
 
 export const RESIDENCE = [
   "北海道",
@@ -54,28 +55,40 @@ export const RESIDENCE = [
 ] as const;
 
 type Props = {
-  register: UseFormRegister<IUser>;
+  reactHookFormReturn: UseFormReturn<IUser, any>;
 };
-export const Residence: FC<Props> = ({ register }) => {
+
+export const Residence: FC<Props> = ({ reactHookFormReturn }) => {
+  const { register, control } = reactHookFormReturn;
+
   return (
-    <div>
-      <FormControl variant="standard" sx={{ minWidth: 120 }}>
-        <InputLabel id="residence">居住地</InputLabel>
-        <Select
-          labelId="residence"
-          id="demo-simple-select-standard"
-          label="Age"
-          {...register("residence", { required: "選択してください" })}
-        >
-          {RESIDENCE.map((residence) => {
-            return (
-              <MenuItem key={residence} value={residence}>
+    <Controller
+      control={control}
+      name="residence"
+      defaultValue=""
+      render={({ field, fieldState: { error } }) => (
+        <>
+          <TextField
+            {...field}
+            select
+            fullWidth
+            label="居住地"
+            error={!!error?.message}
+            helperText={error?.message}
+            variant="standard"
+          >
+            {RESIDENCE.map((residence) => (
+              <MenuItem
+                key={residence}
+                value={residence}
+                {...register("residence", { required: "選択必須項目です" })}
+              >
                 {residence}
               </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-    </div>
+            ))}
+          </TextField>
+        </>
+      )}
+    />
   );
 };

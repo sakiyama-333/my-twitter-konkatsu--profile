@@ -48,7 +48,8 @@ export const Footer: FC = () => {
 const Sfooter = styled("footer")({
   width: "100%",
   backgroundColor: COLOR.MAIN_MINT_GREEN,
-  padding: "40px 0"
+  padding: "40px 0",
+  marginTop: "48px",
 });
 
 const Slayout = styled("div")({

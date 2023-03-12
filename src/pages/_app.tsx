@@ -1,26 +1,29 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import type { AppProps } from "next/app";
+import { styled } from "@mui/material/styles";
+
 import { Header } from "../client/Header";
 import { Footer } from "../client/Footer";
-import styled from "@emotion/styled";
+import { COLOR } from "../client/ColorTheme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <CssBaseline />
-      <Header />
-      <Smain>
+      <SGlobalWrap>
+        <Header />
         <div>
           <Component {...pageProps} />
         </div>
-      </Smain>
-      <Footer />
+        <Footer />
+      </SGlobalWrap>
     </>
   );
 }
 
-const Smain = styled("main")({
-  width: "90%",
-  margin: "0 auto",
+const SGlobalWrap = styled("div")({
+  backgroundColor: COLOR.BACKGROUND_COLOR,
+  backgroundImage: "url(/bards.svg)",
 });
+
 export default MyApp;

@@ -1,7 +1,8 @@
 import { Schema, model, InferSchemaType } from "mongoose";
 
 export type IUser = {
-  name: string;
+  _id: string;
+  // name: string;
   gender: number;
   age: number;
   residence: string;
@@ -15,11 +16,11 @@ export type IUser = {
 };
 
 const UserSchema = new Schema<IUser>({
-  name: {
-    type: String,
-    required: true,
-    maxlength: 20,
-  },
+  // name: {
+  //   type: String,
+  //   required: true,
+  //   maxlength: 20,
+  // },
   gender: {
     type: Number,
     required: true,
@@ -61,4 +62,4 @@ const UserSchema = new Schema<IUser>({
 
 export const User = model<IUser>("User", UserSchema);
 
-type aaa = typeof UserSchema
+type aaa = typeof UserSchema;

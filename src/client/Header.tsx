@@ -7,14 +7,23 @@ export const Header: FC = () => {
     <>
       <Sheader>
         <a href="#">
-          <Image src="/logo.svg" alt="logo image" width={120} height={70} />
+          <Image
+            className="logo_image"
+            src="/logo.svg"
+            alt="logo image"
+            width={120}
+            height={70}
+          />
         </a>
       </Sheader>
     </>
   );
 };
 
-const Sheader = styled("footer")({
-  width: "90%",
-  margin: " 8px auto",
+const Sheader = styled("header")({
+  maxWidth: "900px",
+  "& a": {
+    display: "block",
+    padding: " 20px",
+  },
 });

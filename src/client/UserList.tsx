@@ -35,11 +35,13 @@ export const UserList: FC = () => {
       <div>
         {users.map((user) => {
           return (
-            <div key={user.name}>
-              <h3>Name：{user.name}</h3>
+            // <div key={user.name}>
+            <div key={user._id}>
+              🍵
+              {/* <h3>Name：{user.name}</h3> */}
               <p>Gender：{user.gender}</p>
               <p>Age：{user.age}</p>
-              <p>Residence{user.residence}</p>
+              <p>Residence：{user.residence}</p>
             </div>
           );
         })}

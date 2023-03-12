@@ -4,9 +4,10 @@ export const COLOR = {
   ACCENT: "#FFE147",
   BLACK: "#262035",
   DARK_GREEN: "#0B4142",
+  BACKGROUND_COLOR: "#FBF5E6",
   DANGER: "#B30000",
   WHITE: "#ffffff",
-};
+} as const;
 
 // import { createTheme } from "@mui/material/styles";
 

@@ -1,48 +1,59 @@
-import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { IUser } from "../../models/UserDataSchema";
 import { FC } from "react";
+import { UseFormReturn, Controller } from "react-hook-form";
 import {
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,
 } from "@mui/material";
 
-const radioButtons = [
-  { id: "male", label: "👨男", value: 1, required: true },
-  { id: "female", label: "👩女", value: 2, required: false },
-];
+import { IUser } from "../../models/UserDataSchema";
+
+const GENDER_ITEM = [
+  { id: "male", label: "👨男", value: 1 },
+  { id: "female", label: "👩女", value: 2 },
+] as const;
 
 type Props = {
-  register: UseFormRegister<IUser>;
-  errors: FieldErrors<IUser>;
+  reactHookFormReturn: UseFormReturn<IUser, any>;
 };
 
-export const Gender: FC<Props> = ({ register, errors }) => {
+export const Gender: FC<Props> = ({ reactHookFormReturn }) => {
+  const { register, control } = reactHookFormReturn;
+
   return (
-    <div>
-      <FormControl>
-        <FormLabel id="demo-radio-buttons-group-label">性別</FormLabel>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          name="radio-buttons-group"
-        >
-          {radioButtons.map((radio) => {
-            const { id, label, value, required } = radio;
-            return (
-              <FormControlLabel
-                key={value}
-                value={value}
-                control={<Radio size="small" />}
-                label={label}
-                {...register("gender", { required: "選択してください" })}
-              />
-            );
-          })}
-        </RadioGroup>
-      </FormControl>
-      {errors.gender?.message && <div>{errors.gender.message}</div>}
-    </div>
+    <FormControl>
+      <FormLabel>性別</FormLabel>
+      <Controller
+        control={control}
+        name="gender"
+        defaultValue={1}
+        render={({ field, fieldState: { error } }) => (
+          <>
+            <RadioGroup>
+              {GENDER_ITEM.map((radio) => (
+                <FormControlLabel
+                  {...field}
+                  key={radio.value}
+                  label={radio.label}
+                  value={radio.value}
+                  control={<Radio />}
+                  {...register("gender", { required: "選択必須項目です" })}
+                />
+              ))}
+            </RadioGroup>
+            <FormHelperText error={!!error?.message} sx={{ ml: 0 }}>
+              {error?.message}
+            </FormHelperText>
+          </>
+        )}
+      />
+    </FormControl>
   );
 };
+
+// MEMO：MUIの機能を使ってエラーの実装をしようとしたものの上手くいかなかったので、react-hook-formの機能を使って実装する
+// ×：rules={{required: {value: true, message: '色は選択必須です'}}}
+// 〇：{...register("gender", { required: "選択必須項目です" })}

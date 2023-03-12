@@ -1,28 +1,31 @@
-import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { IUser } from "../../models/UserDataSchema";
 import { FC } from "react";
+import { UseFormReturn } from "react-hook-form";
 import { TextField } from "@mui/material";
 
+import { IUser } from "../../models/UserDataSchema";
+
 type Props = {
-  register: UseFormRegister<IUser>;
-  errors: FieldErrors<IUser>;
+  reactHookFormReturn: UseFormReturn<IUser, any>;
 };
 
-export const Height: FC<Props> = ({ register, errors }) => {
+export const Height: FC<Props> = ({ reactHookFormReturn }) => {
+  const {
+    register,
+    formState: { errors },
+  } = reactHookFormReturn;
+
   return (
-    <div>
-      <TextField
-        id="standard-basic"
-        label="身長"
-        variant="standard"
-        placeholder="例: 160"
-        {...register("height", {
-          required: "入力が必須の項目です",
-          minLength: { value: 3, message: "3桁以内で入力してください" },
-          maxLength: { value: 3, message: "3桁以内で入力してください" },
-        })}
-      />
-      {errors.height?.message && <div>{errors.height.message}</div>}
-    </div>
+    <TextField
+      label="身長"
+      error={!!errors?.height}
+      helperText={errors?.height?.message}
+      type="number"
+      variant="standard"
+      {...register("height", {
+        required: "入力必須項目です",
+        minLength: { value: 3, message: "2桁以内で入力してください" },
+        maxLength: { value: 3, message: "2桁以内で入力してください" },
+      })}
+    />
   );
 };

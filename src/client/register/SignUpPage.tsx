@@ -2,15 +2,13 @@ import axios, { AxiosError } from "axios";
 import { FC, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
-import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Button, Container, Paper, Stack } from "@mui/material";
 
 import { IUser } from "../../models/UserDataSchema";
 import { Gender } from "./Gender";
 import { Age } from "./Age";
 import { Residence } from "./Residence";
 import { Height } from "./Height";
-import { COLOR } from "../ColorTheme";
 
 const port = process.env.NEXT_PUBLIC_PORT;
 const endPoint = `http://localhost:${port}/api/user`;
@@ -18,17 +16,12 @@ const endPoint = `http://localhost:${port}/api/user`;
 export const SignUpPage: FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<IUser>();
+  const reactHookFormReturn = useForm<IUser>();
 
-  const onSubmit: SubmitHandler<IUser> = async (data: IUser) => {
-    reset();
+  const onSubmit: SubmitHandler<IUser> = async (data) => {
     try {
       await axios.post<IUser[]>(endPoint, data);
+      router.push("/users");
     } catch (err) {
       if (err instanceof SyntaxError) {
         setErrorMessage("構文エラーが出ました");
@@ -43,38 +36,34 @@ export const SignUpPage: FC = () => {
   };
 
   return (
-    <div>
-      <SWrap>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <br />
-          <Gender register={register} errors={errors} />
-          <br />
-          <Age register={register} errors={errors} />
-          <br />
-          <Residence register={register} />
-          <br />
-          <Height register={register} errors={errors} />
-          <br />
-          <SButton variant="contained">登録</SButton>
+    <Container maxWidth="md">
+      <Paper elevation={3}>
+        <form
+          className="InputFormParent"
+          onSubmit={reactHookFormReturn.handleSubmit(onSubmit)}
+        >
+          <Container maxWidth="xs">
+            <Stack
+              spacing={2}
+              sx={{
+                width: "90%",
+                m: "0 auto",
+                p: "48px 0",
+              }}
+            >
+              <Gender reactHookFormReturn={reactHookFormReturn} />
+              <Age reactHookFormReturn={reactHookFormReturn} />
+              <Residence reactHookFormReturn={reactHookFormReturn} />
+              <Height reactHookFormReturn={reactHookFormReturn} />
+            </Stack>
+          </Container>
+          <Container maxWidth="lg" sx={{ textAlign: "center", pb: "48px" }}>
+            <Button type="submit" variant="outlined" sx={{ width: "25%" }}>
+              登録
+            </Button>
+          </Container>
         </form>
-      </SWrap>
-    </div>
+      </Paper>
+    </Container>
   );
 };
-
-const SWrap = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-});
-
-const SButton = styled(Button)({
-  width: "100%",
-  border: `1px solid ${COLOR.DARK_GREEN}`,
-  borderRadius: "0px",
-  backgroundColor: COLOR.WHITE,
-  color: COLOR.DARK_GREEN,
-
-  "&:hover": {
-    backgroundColor: COLOR.ACCENT,
-  },
-});
