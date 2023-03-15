@@ -21,7 +21,7 @@ export const SignUpPage: FC = () => {
   const onSubmit: SubmitHandler<IUser> = async (data) => {
     try {
       await axios.post<IUser[]>(endPoint, data);
-      router.push("/users");
+      router.push("/profile");
     } catch (err) {
       if (err instanceof SyntaxError) {
         setErrorMessage("構文エラーが出ました");

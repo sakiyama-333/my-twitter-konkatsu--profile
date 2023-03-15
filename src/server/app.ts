@@ -27,6 +27,15 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+app.get("/api/profile", async (req, res) => {
+  try {
+    const userData = await User.findById(req.body._id);
+    console.log(userData);
+    // res.status(200).json(allUserData);
+  } catch (err) {
+    console.log(`🧹${err}`);
+  }
+});
 app.get("/api/user", async (req, res) => {
   try {
     const allUserData = await User.find();
