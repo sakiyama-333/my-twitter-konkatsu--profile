@@ -2,11 +2,13 @@ import express, { NextFunction, Response, Request } from "express";
 import env from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 import { IUser, User } from "../models/UserDataSchema";
 
 env.config();
 const app = express();
 const port = process.env.NEXT_PUBLIC_PORT ?? 8080;
+const db = mongoose.connection;
 
 app.use(express.json());
 
@@ -27,11 +29,25 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+app.post("/api/login", async (req, res, next) => {
+  try {
+    const generateToken = (user: IUser): string => {
+      const secret = process.env.JWT_SECRET;
+      if (!secret) throw new Error("JWT secret is not defined");
+      const token = jwt.sign({ id: user._id }, secret, { expiresIn: "1d" });
+      return token;
+    };
+  } catch (err) {
+    console.log(`😭${err}`);
+    return next("Userが作れませんでした");
+  }
+});
+
 app.get("/api/profile", async (req, res) => {
   try {
-    const userData = await User.findById(req.body._id);
+    const userData = await User.findById(req.query._id);
     console.log(userData);
-    // res.status(200).json(allUserData);
+    res.status(200).json(userData);
   } catch (err) {
     console.log(`🧹${err}`);
   }

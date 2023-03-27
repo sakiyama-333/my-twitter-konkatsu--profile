@@ -8,7 +8,7 @@ type Props = {
   reactHookFormReturn: UseFormReturn<IUser, any>;
 };
 
-export const Age: FC<Props> = ({ reactHookFormReturn }) => {
+export const Height: FC<Props> = ({ reactHookFormReturn }) => {
   const {
     register,
     formState: { errors },
@@ -16,15 +16,15 @@ export const Age: FC<Props> = ({ reactHookFormReturn }) => {
 
   return (
     <TextField
-      label="年齢"
-      error={!!errors?.age}
-      helperText={errors?.age?.message}
+      label="身長"
+      error={!!errors?.height}
+      helperText={errors?.height?.message}
       type="number"
       variant="standard"
-      {...register("age", {
+      {...register("height", {
         required: "入力必須項目です",
-        minLength: { value: 2, message: "2桁以内で入力してください" },
-        maxLength: { value: 2, message: "2桁以内で入力してください" },
+        minLength: { value: 3, message: "2桁以内で入力してください" },//todoaaaaaaaaaaaaaaaaaaaaaaa
+        maxLength: { value: 3, message: "2桁以内で入力してください" },
       })}
     />
   );

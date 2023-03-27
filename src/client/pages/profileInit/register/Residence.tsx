@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { MenuItem, TextField } from "@mui/material";
+import { IUser } from "../../../../models/UserDataSchema";
 
-import { IUser } from "../../models/UserDataSchema";
 
 export const RESIDENCE = [
   "北海道",

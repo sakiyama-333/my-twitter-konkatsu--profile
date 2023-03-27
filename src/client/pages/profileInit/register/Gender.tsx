@@ -8,8 +8,8 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import { IUser } from "../../../../models/UserDataSchema";
 
-import { IUser } from "../../models/UserDataSchema";
 
 const GENDER_ITEM = [
   { id: "male", label: "👨男", value: 1 },
