@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import axios from "axios";
 import { SEO } from "../client/SEO";
-import { UserList } from "../client/UserList";
+import { UserList } from "../client/pages/UserList";
 
 const Users: NextPage = () => {
   return (

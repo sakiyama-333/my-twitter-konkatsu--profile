@@ -3,9 +3,9 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect } from "react";
 import axios from "axios";
+import {UserProfile} from "../client/pages/UserProfile";
 
 import { SEO } from "../client/SEO";
-import { UserProfile } from "../client/pages/Profile";
 
 const Profile: NextPage = () => {
   return (

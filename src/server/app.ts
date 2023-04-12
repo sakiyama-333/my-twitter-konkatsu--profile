@@ -1,24 +1,46 @@
-import express, { NextFunction, Response, Request } from "express";
 import env from "dotenv";
-import cors from "cors";
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
-import { IUser, User } from "../models/UserDataSchema";
-
 env.config();
+
+import express from "express";
+import  { JwtPayload } from "jsonwebtoken";
+import passport from "passport";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import authRouter from "./auth/route";
+
+import { IUser, UserModel } from "../models/UserDataSchema";
+import { authenticateJWT } from "./auth/authenticateJWT.middleware";
+
 const app = express();
-const port = process.env.NEXT_PUBLIC_PORT ?? 8080;
-const db = mongoose.connection;
-
-app.use(express.json());
-
-app.use(express.static("pages"));
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://konnkatu.com"],
+    credentials: true,
   })
 );
+app.use(express.json());
+app.use(express.static("pages"));
+app.use(passport.initialize());
+app.use(cookieParser());
+
+app.use("/auth", authRouter);
+
+//TODO: Twitter認証のケースを追加する
+// passport.use(
+//   new TwitterStrategy(
+//     {
+//       callbackURL: process.env.GOOGLE_CALLBACK_URL!,
+//       clientID: process.env.GOOGLE_CLIENT_ID!,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+//     async (accessToken, refreshToken, profile: Profile, done) => {
+//       const currentUser = await UserModel.findOne({
+//         serviceProviderId: profile.id,
+//       });
+//     }
+//   ),
+// )
 
 if (!process.env.MONGO_URI) throw new Error("あかん");
 
@@ -29,43 +51,21 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.post("/api/login", async (req, res, next) => {
+app.get("/api/users", async (req, res) => {
+  req.cookies;
   try {
-    const generateToken = (user: IUser): string => {
-      const secret = process.env.JWT_SECRET;
-      if (!secret) throw new Error("JWT secret is not defined");
-      const token = jwt.sign({ id: user._id }, secret, { expiresIn: "1d" });
-      return token;
-    };
-  } catch (err) {
-    console.log(`😭${err}`);
-    return next("Userが作れませんでした");
-  }
-});
-
-app.get("/api/profile", async (req, res) => {
-  try {
-    const userData = await User.findById(req.query._id);
-    console.log(userData);
-    res.status(200).json(userData);
-  } catch (err) {
-    console.log(`🧹${err}`);
-  }
-});
-app.get("/api/user", async (req, res) => {
-  try {
-    const allUserData = await User.find();
+    const allUserData = await UserModel.find();
     res.status(200).json(allUserData);
   } catch (err) {
     console.log(`🧹${err}`);
   }
 });
 
-app.post("/api/user", async (req, res, next) => {
+app.post("/api/users", async (req, res, next) => {
   const body = req.body as IUser;
   // TODO:18歳以下は登録できないのでエラーを吐くようにしたい
   try {
-    const result = await User.create(body);
+    const result = await UserModel.create(body);
     res.status(200).json(result);
   } catch (err) {
     console.log(`😭${err}`);
@@ -73,24 +73,21 @@ app.post("/api/user", async (req, res, next) => {
   }
 });
 
-app.use(function (req, res) {
-  res.status(404).send("Page Not Found");
-});
-
-app.use(function (
-  errMessage: string,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  switch (errMessage) {
-    case "Userが作れませんでした":
-      return res.status(500).json(errMessage);
-      break;
+app.get("/api/profile", authenticateJWT, async (req, res) => {
+  if (!req.user) {
+    throw new Error("ユーザー情報がありません");
   }
-  // res.status(500).json({ msg: err.message });
+  const { id } = req.user as JwtPayload;
+  try {
+    const userData = await UserModel.find({ oauthProviderId: id });
+    res.status(200).json(userData);
+  } catch (err) {
+    console.log(`🧹${err}`);
+  }
 });
 
-app.listen(port, () => {
-  console.log(`💓Server start: http://localhost:${port}`);
+const PORT = new URL(process.env.NEXT_PUBLIC_API_URL!).port ?? 8080;
+app.listen(PORT, () => {
+  console.log(`💓Server start: http://localhost:${PORT}`);
 });
+

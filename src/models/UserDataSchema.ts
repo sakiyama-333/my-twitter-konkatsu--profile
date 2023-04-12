@@ -2,11 +2,15 @@ import { Schema, model, InferSchemaType } from "mongoose";
 
 export type IUser = {
   _id: string;
-  // name: string;
+  oauthProviderId: string;
+  name: string;
+  email: string;
+  profilePhoto: String;
   gender: number;
   age: number;
   residence: string;
   height: number;
+  source: "google" | "twitter";
   // figure: string;
   // academicHistory: string;
   // job: string;
@@ -16,26 +20,39 @@ export type IUser = {
 };
 
 const UserSchema = new Schema<IUser>({
-  // name: {
-  //   type: String,
-  //   required: true,
-  //   maxlength: 20,
-  // },
+  oauthProviderId: {
+    type: String,
+    // required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+    maxlength: 20,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  profilePhoto: { type: String, required: true },
   gender: {
     type: Number,
-    required: true,
+    required: false,
   },
   age: {
     type: Number,
-    required: true,
+    required: false,
     maxlength: 2,
   },
   residence: {
     type: String,
-    required: true,
+    required: false,
   },
   height: {
     type: Number,
+    required: false,
+  },
+  source: {
+    type: String,
     required: true,
   },
   // figure: {
@@ -60,6 +77,4 @@ const UserSchema = new Schema<IUser>({
 
 // export type UserType = InferSchemaType<typeof UserSchema>;
 
-export const User = model<IUser>("User", UserSchema);
-
-type aaa = typeof UserSchema;
+export const UserModel = model<IUser>("User", UserSchema);

@@ -23,7 +23,6 @@ export const ProfileInit: FC = () => {
       await axios.post<IUser[]>(endPoint, data);
       router.push(`/profile?_id=${data._id}`);
       // router.push(`/mypage`);
-      console.log(data._id);
     } catch (err) {
       if (err instanceof SyntaxError) {
         setErrorMessage("構文エラーが出ました");
