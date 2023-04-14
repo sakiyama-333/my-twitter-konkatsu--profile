@@ -1,9 +1,9 @@
-import TwitterIcon from "@mui/icons-material/Twitter";
-import styled from "@emotion/styled";
 import { FC } from "react";
 import Image from "next/image";
-// import { COLOR } from "./theme/Color";
-import { error } from "console";
+import { Link, ThemeProvider, styled } from "@mui/material";
+import TwitterIcon from "@mui/icons-material/Twitter";
+
+import theme from "./theme/Color";
 
 const linkItems = [
   "トップ",
@@ -17,39 +17,50 @@ const linkItems = [
 
 export const Footer: FC = () => {
   return (
-    <Sfooter>
-      <Slayout>
-        <Image src="/logo.svg" alt="logo image" width={120} height={70} />
-        <div className="linkItem">
-          {linkItems.map((item) => {
-            if (item !== "作った人") {
-              return (
-                <a href="#" key={item}>
-                  {item}
-                </a>
-              );
-            } else {
-              return (
-                <a href="#" key={item}>
-                  {item}
-                  <TwitterIcon />
-                </a>
-              );
-            }
-          })}
-        </div>
-        <div className="logoAndCopyright">
-          <small>&copy; 2023 MY Twitter 婚活プロフィール</small>
-        </div>
-      </Slayout>
-    </Sfooter>
+    <ThemeProvider theme={theme}>
+      <Sfooter>
+        <Slayout>
+          <Image src="/logo.svg" alt="logo image" width={120} height={70} />
+          <div className="linkItem">
+            {linkItems.map((item) => {
+              if (item !== "作った人") {
+                return (
+                  <Link
+                    href="#"
+                    key={item}
+                    color={theme.palette.customDarkGreen.main}
+                  >
+                    {item}
+                  </Link>
+                );
+              } else {
+                return (
+                  <Link
+                    href="https://twitter.com/yamiko_333_dev"
+                    key={item}
+                    color={theme.palette.customDarkGreen.main}
+                  >
+                    {item}
+                    <TwitterIcon />
+                  </Link>
+                );
+              }
+            })}
+          </div>
+          <div className="logoAndCopyright">
+            <small>&copy; 2023 MY Twitter 婚活プロフィール</small>
+          </div>
+        </Slayout>
+      </Sfooter>
+    </ThemeProvider>
   );
 };
 
 const Sfooter = styled("footer")({
   width: "100%",
-  padding: "40px 0",
   marginTop: "48px",
+  padding: "40px 0",
+  background: theme.palette.customMintGreen.main,
 });
 
 const Slayout = styled("div")({
@@ -81,6 +92,7 @@ const Slayout = styled("div")({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
+    color: theme.palette.customDarkGreen.main,
     fontSize: "10px",
     textAlign: "center",
   },

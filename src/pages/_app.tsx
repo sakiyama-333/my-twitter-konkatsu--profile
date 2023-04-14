@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 
 import { Header } from "../client/Header";
 import { Footer } from "../client/Footer";
-// import { COLOR } from "../client/theme/Color";
+import theme from "../client/theme/Color";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 const SGlobalWrap = styled("div")({
-  // backgroundColor: COLOR.BACKGROUND_COLOR,
+  background: theme.palette.customBackground.main,
   backgroundImage: "url(/bards.svg)",
 });
 
