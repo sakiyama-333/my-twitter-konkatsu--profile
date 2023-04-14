@@ -2,7 +2,8 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import styled from "@emotion/styled";
 import { FC } from "react";
 import Image from "next/image";
-import { COLOR } from "../client/ColorTheme";
+// import { COLOR } from "./theme/Color";
+import { error } from "console";
 
 const linkItems = [
   "トップ",
@@ -47,7 +48,6 @@ export const Footer: FC = () => {
 
 const Sfooter = styled("footer")({
   width: "100%",
-  backgroundColor: COLOR.MAIN_MINT_GREEN,
   padding: "40px 0",
   marginTop: "48px",
 });
@@ -67,7 +67,6 @@ const Slayout = styled("div")({
     alignItems: "center",
     gap: "12px 24px",
     "& > a": {
-      color: COLOR.DARK_GREEN,
       textDecoration: "none",
       transition: "0.5s",
       "&:hover": {
@@ -82,7 +81,6 @@ const Slayout = styled("div")({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
-    color: COLOR.DARK_GREEN,
     fontSize: "10px",
     textAlign: "center",
   },

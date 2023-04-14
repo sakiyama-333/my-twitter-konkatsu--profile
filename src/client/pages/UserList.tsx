@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { styled } from "@mui/material/styles";
 
 import { IUser } from "../../models/UserDataSchema";
-import { COLOR } from "../ColorTheme";
+// import { COLOR } from "../theme/Color";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 

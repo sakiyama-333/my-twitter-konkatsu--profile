@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import { IUser } from "../../models/UserDataSchema";
 import { UserList } from "./UserList";
+import { CustomButton } from "../CustomButton";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 console.log(process.env.NEXT_PUBLIC_API_URL, "😀");
@@ -40,9 +41,7 @@ export const Index: FC = () => {
         onSubmit={reactHookFormReturn.handleSubmit(onSubmit)}
       >
         <Container maxWidth="lg" sx={{ textAlign: "center", pb: "48px" }}>
-          <Button type="submit" variant="outlined" sx={{ width: "25%" }}>
-            Googleでログイン／登録
-          </Button>
+          <CustomButton label="Googleでログイン／登録" />
         </Container>
       </form>
       <UserList />

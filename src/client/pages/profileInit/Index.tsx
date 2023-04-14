@@ -59,7 +59,7 @@ export const ProfileInit: FC = () => {
             </Stack>
           </Container>
           <Container maxWidth="lg" sx={{ textAlign: "center", pb: "48px" }}>
-            <Button type="submit" variant="outlined" sx={{ width: "25%" }}>
+            <Button type="submit" variant="contained" sx={{ width: "25%" }}>
               登録
             </Button>
           </Container>

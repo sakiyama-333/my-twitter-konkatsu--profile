@@ -1,12 +1,13 @@
 import { FC } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Header: FC = () => {
   return (
     <>
       <Sheader>
-        <a href="#">
+        <Link href="/">
           <Image
             className="logo_image"
             src="/logo.svg"
@@ -14,7 +15,7 @@ export const Header: FC = () => {
             width={120}
             height={70}
           />
-        </a>
+        </Link>
       </Sheader>
     </>
   );
