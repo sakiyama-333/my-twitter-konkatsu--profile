@@ -7,11 +7,12 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { IUser } from "../../../../models/UserDataSchema";
 
-
-const GENDER_ITEM = [
+export const GENDER_ITEM = [
   { id: "male", label: "👨男", value: 1 },
   { id: "female", label: "👩女", value: 2 },
 ] as const;
@@ -40,7 +41,10 @@ export const Gender: FC<Props> = ({ reactHookFormReturn }) => {
                   label={radio.label}
                   value={radio.value}
                   control={<Radio />}
-                  {...register("gender", { required: "選択必須項目です" })}
+                  {...register("gender", {
+                    valueAsNumber: true,
+                    required: "選択必須項目です",
+                  })}
                 />
               ))}
             </RadioGroup>

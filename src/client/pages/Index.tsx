@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import { IUser } from "../../models/UserDataSchema";
 import { UserList } from "./UserList";
-import { CustomButton } from "../CustomButton";
+import { PrimaryButton } from "../CustomButton";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 console.log(process.env.NEXT_PUBLIC_API_URL, "😀");
@@ -20,7 +20,6 @@ export const Index: FC = () => {
   const onSubmit: SubmitHandler<IUser> = async (data) => {
     try {
       router.replace(`${API_URL}/auth/google`);
-      // await axios.get(endPoint);
     } catch (err) {
       if (err instanceof SyntaxError) {
         setErrorMessage("構文エラーが出ました");
@@ -34,14 +33,38 @@ export const Index: FC = () => {
     }
   };
 
+    const twitterAuth = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+try {
+  router.replace(`${API_URL}/auth/twitter`);
+} catch (err) {
+  if (err instanceof SyntaxError) {
+    setErrorMessage("構文エラーが出ました");
+    return;
+  }
+  if (err instanceof AxiosError) {
+    setErrorMessage(err.response?.data);
+    return;
+  }
+  setErrorMessage("予期せぬエラー");
+}
+    };
+
   return (
     <div>
-      <form
-        className="InputFormParent"
-        onSubmit={reactHookFormReturn.handleSubmit(onSubmit)}
-      >
+      <form onSubmit={reactHookFormReturn.handleSubmit(onSubmit)}>
         <Container maxWidth="lg" sx={{ textAlign: "center", pb: "48px" }}>
-          <CustomButton label="Googleでログイン／登録" />
+          {/* TODO: Googleログイン用のボタンを別途用意する */}
+          <PrimaryButton type="submit" variant="contained">
+            Googleでログイン／登録
+          </PrimaryButton>
+          <PrimaryButton
+            type="submit"
+            variant="contained"
+            onClick={twitterAuth}
+          >
+            Twitterでログイン／登録
+          </PrimaryButton>
         </Container>
       </form>
       <UserList />

@@ -8,10 +8,14 @@ export type IUser = {
   profilePhoto: String;
   gender: number;
   age: number;
-  residence: string;
+  residence: number;
   height: number;
   source: "google" | "twitter";
-  // figure: string;
+  selfExpression: {
+    first: string;
+    second: string;
+    third: string;
+  };
   // academicHistory: string;
   // job: string;
   // holiday: string;
@@ -22,7 +26,7 @@ export type IUser = {
 const UserSchema = new Schema<IUser>({
   oauthProviderId: {
     type: String,
-    // required: true,
+    required: true,
   },
   name: {
     type: String,
@@ -31,9 +35,12 @@ const UserSchema = new Schema<IUser>({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
   },
-  profilePhoto: { type: String, required: true },
+  profilePhoto: {
+    type: String,
+    required: false,
+  },
   gender: {
     type: Number,
     required: false,
@@ -44,16 +51,20 @@ const UserSchema = new Schema<IUser>({
     maxlength: 2,
   },
   residence: {
-    type: String,
+    type: Number,
     required: false,
   },
   height: {
     type: Number,
     required: false,
   },
-  source: {
-    type: String,
-    required: true,
+  selfExpression: {
+    type: {
+      first: { type: String },
+      second: { type: String },
+      third: { type: String },
+    },
+    required: false,
   },
   // figure: {
   //   type: String,
@@ -73,6 +84,10 @@ const UserSchema = new Schema<IUser>({
   // favoriteType: {
   //   type: String,
   // },
+  source: {
+    type: String,
+    required: true,
+  },
 });
 
 // export type UserType = InferSchemaType<typeof UserSchema>;

@@ -1,7 +1,7 @@
-import {
-  Palette as MuiPallete,
-  PaletteOptions as MuiPaletteOptions,
-} from "@mui/material/styles/createPalette";
+// import {
+//   Palette as MuiPallete,
+//   PaletteOptions as MuiPaletteOptions,
+// } from "@mui/material/styles/createPalette";
 
 import { ButtonPropsColorOverrides } from "@mui/material/Button";
 

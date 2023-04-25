@@ -1,6 +1,14 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { TextField } from "@mui/material";
+import {
+  Box,
+  Chip,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { IUser } from "../../../../models/UserDataSchema";
 
@@ -20,9 +28,11 @@ export const Age: FC<Props> = ({ reactHookFormReturn }) => {
       error={!!errors?.age}
       helperText={errors?.age?.message}
       type="number"
-      variant="standard"
+      variant="outlined"
+      sx={{ width: "100%" }}
       {...register("age", {
         required: "入力必須項目です",
+        valueAsNumber: true,
         minLength: { value: 2, message: "2桁以内で入力してください" },
         maxLength: { value: 2, message: "2桁以内で入力してください" },
       })}

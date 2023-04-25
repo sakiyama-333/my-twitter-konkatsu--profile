@@ -6,13 +6,34 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import theme from "./theme/Color";
 
 const linkItems = [
-  "トップ",
-  "使い方",
-  "ご意見",
-  "利用規約",
-  "プライバシーポリシー",
-  "作った人",
-  "職をください🙇",
+  {
+    text: "トップ",
+    link: "/",
+  },
+  {
+    text: "使い方",
+    link: "about",
+  },
+  {
+    text: "ご意見",
+    link: "contact",
+  },
+  {
+    text: "利用規約",
+    link: "terms",
+  },
+  {
+    text: "プライバシーポリシー",
+    link: "privacy",
+  },
+  {
+    text: "作った人",
+    link: "https://twitter.com/yamiko_333_dev",
+  },
+  {
+    text: "職をください🙇",
+    link: "/",
+  },
 ] as const;
 
 export const Footer: FC = () => {
@@ -23,24 +44,24 @@ export const Footer: FC = () => {
           <Image src="/logo.svg" alt="logo image" width={120} height={70} />
           <div className="linkItem">
             {linkItems.map((item) => {
-              if (item !== "作った人") {
+              if (item.text !== "作った人") {
                 return (
                   <Link
-                    href="#"
-                    key={item}
+                    href={item.link}
+                    key={item.text}
                     color={theme.palette.customDarkGreen.main}
                   >
-                    {item}
+                    {item.text}
                   </Link>
                 );
               } else {
                 return (
                   <Link
-                    href="https://twitter.com/yamiko_333_dev"
-                    key={item}
+                    href={item.link}
+                    key={item.text}
                     color={theme.palette.customDarkGreen.main}
                   >
-                    {item}
+                    {item.text}
                     <TwitterIcon />
                   </Link>
                 );
@@ -52,6 +73,7 @@ export const Footer: FC = () => {
           </div>
         </Slayout>
       </Sfooter>
+      <Sdecoration />
     </ThemeProvider>
   );
 };
@@ -96,4 +118,9 @@ const Slayout = styled("div")({
     fontSize: "10px",
     textAlign: "center",
   },
+});
+
+const Sdecoration = styled("div")({
+  height: "5px",
+  background: theme.palette.customPink.main,
 });

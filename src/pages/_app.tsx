@@ -5,8 +5,46 @@ import { styled } from "@mui/material/styles";
 import { Header } from "../client/Header";
 import { Footer } from "../client/Footer";
 import theme from "../client/theme/Color";
+import { axiosInstance } from "../client/axiosInstance";
+import { useRouter } from "next/router";
+import { useAtom } from "jotai";
+import loginUserAtom from "../client/Atom";
+import { IUser } from "../models/UserDataSchema";
+import { AxiosError } from "axios";
+import { useEffect, useLayoutEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+  const router = useRouter();
+
+  const getUser = async () => {
+    try {
+      const { data } = await axiosInstance.get<IUser>("/api/profile");
+      if (!data) {
+        router.push("/");
+        return;
+      }
+      setLoginUser(data);
+      if (!data.age) {
+        router.push("/profile-init");
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        router.push("/");
+      }
+    }
+  };
+
+  useLayoutEffect(() => {
+    getUser();
+  }, []);
+  
+  // const loginUrl = ""
+  // if(!loginUser?._id && router.basePath !== loginUrl){
+  //   return (
+  //     <h1>loading...</h1>
+  //   )
+  // }
   return (
     <>
       <CssBaseline />

@@ -2,7 +2,7 @@ import env from "dotenv";
 env.config();
 
 import express from "express";
-import  { JwtPayload } from "jsonwebtoken";
+import { JwtPayload } from "jsonwebtoken";
 import passport from "passport";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
@@ -11,6 +11,8 @@ import authRouter from "./auth/route";
 
 import { IUser, UserModel } from "../models/UserDataSchema";
 import { authenticateJWT } from "./auth/authenticateJWT.middleware";
+import { validateRequestBodyByScheme } from "./validation/validationSchema";
+import { IUserSchema } from "./../zod/IUserSchema";
 
 const app = express();
 
@@ -61,15 +63,16 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-app.post("/api/users", async (req, res, next) => {
+app.patch("/api/users", validateRequestBodyByScheme(IUserSchema), async (req, res, next) => {
   const body = req.body as IUser;
-  // TODO:18歳以下は登録できないのでエラーを吐くようにしたい
+  const { _id } = req.body;
   try {
-    const result = await UserModel.create(body);
-    res.status(200).json(result);
+    const user = await UserModel.updateOne({ _id }, { $set: body });
+    console.log({ user });
+    res.status(200).json(user);
   } catch (err) {
     console.log(`😭${err}`);
-    return next("Userが作れませんでした");
+    return next("情報の更新に失敗しました");
   }
 });
 
@@ -79,7 +82,7 @@ app.get("/api/profile", authenticateJWT, async (req, res) => {
   }
   const { id } = req.user as JwtPayload;
   try {
-    const userData = await UserModel.find({ oauthProviderId: id });
+    const userData = await UserModel.findOne({ oauthProviderId: id });
     res.status(200).json(userData);
   } catch (err) {
     console.log(`🧹${err}`);
@@ -90,4 +93,3 @@ const PORT = new URL(process.env.NEXT_PUBLIC_API_URL!).port ?? 8080;
 app.listen(PORT, () => {
   console.log(`💓Server start: http://localhost:${PORT}`);
 });
-

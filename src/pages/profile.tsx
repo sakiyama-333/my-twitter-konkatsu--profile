@@ -3,17 +3,17 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect } from "react";
 import axios from "axios";
-import {UserProfile} from "../client/pages/UserProfile";
+import { Profile } from "../client/pages/Profile";
 
 import { SEO } from "../client/SEO";
 
-const Profile: NextPage = () => {
+const ProfilePage: NextPage = () => {
   return (
     <>
       <SEO title={"ここにタイトル"} description="" />
-      <UserProfile />
+      <Profile />
     </>
   );
 };
 
-export default Profile;
+export default ProfilePage;
