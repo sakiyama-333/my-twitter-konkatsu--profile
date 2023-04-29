@@ -38,43 +38,43 @@ const linkItems = [
 
 export const Footer: FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Sfooter>
-        <Slayout>
-          <Image src="/logo.svg" alt="logo image" width={120} height={70} />
-          <div className="linkItem">
-            {linkItems.map((item) => {
-              if (item.text !== "作った人") {
-                return (
-                  <Link
-                    href={item.link}
-                    key={item.text}
-                    color={theme.palette.customDarkGreen.main}
-                  >
-                    {item.text}
-                  </Link>
-                );
-              } else {
-                return (
-                  <Link
-                    href={item.link}
-                    key={item.text}
-                    color={theme.palette.customDarkGreen.main}
-                  >
-                    {item.text}
-                    <TwitterIcon />
-                  </Link>
-                );
-              }
-            })}
-          </div>
-          <div className="logoAndCopyright">
-            <small>&copy; 2023 MY Twitter 婚活プロフィール</small>
-          </div>
-        </Slayout>
-      </Sfooter>
-      <Sdecoration />
-    </ThemeProvider>
+      <div>
+        <Sfooter>
+          <Slayout>
+            <Image src="/logo.svg" alt="logo image" width={120} height={70} />
+            <div className="linkItem">
+              {linkItems.map((item) => {
+                if (item.text !== "作った人") {
+                  return (
+                    <Link
+                      href={item.link}
+                      key={item.text}
+                      color={theme.palette.customDarkGreen.main}
+                    >
+                      {item.text}
+                    </Link>
+                  );
+                } else {
+                  return (
+                    <Link
+                      href={item.link}
+                      key={item.text}
+                      color={theme.palette.customDarkGreen.main}
+                    >
+                      {item.text}
+                      <TwitterIcon />
+                    </Link>
+                  );
+                }
+              })}
+            </div>
+            <div className="logoAndCopyright">
+              <small>&copy; 2023 MY Twitter 婚活プロフィール</small>
+            </div>
+          </Slayout>
+        </Sfooter>
+        <Sdecoration />
+      </div>
   );
 };
 

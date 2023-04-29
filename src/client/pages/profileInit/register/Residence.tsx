@@ -5,6 +5,10 @@ import { IUser } from "../../../../models/UserDataSchema";
 
 export const RESIDENCE = [
   {
+    code: 0,
+    name: "未選択",
+  },
+  {
     code: 1,
     name: "北海道",
   },
@@ -205,6 +209,7 @@ export const Residence: FC<Props> = ({ reactHookFormReturn }) => {
     <Controller
       control={control}
       name="residence"
+      defaultValue={0}
       render={({ field, fieldState: { error } }) => (
         <>
           <TextField

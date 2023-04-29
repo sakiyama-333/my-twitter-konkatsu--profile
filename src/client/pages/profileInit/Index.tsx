@@ -24,14 +24,10 @@ export const ProfileInit: FC = () => {
   const router = useRouter();
   const reactHookFormReturn = useForm<IUser>();
   const [loginUser] = useAtom(loginUserAtom);
-  
 
   const onSubmit: SubmitHandler<IUser> = async (data) => {
     const payload = { ...data, _id: loginUser?._id };
     payload.gender = Number(payload.gender);
-
-    console.log(payload);
-
     try {
       await axiosInstance.patch<IUser>(`/api/users`, payload);
       router.push(`/profile`);
@@ -51,9 +47,7 @@ export const ProfileInit: FC = () => {
   return (
     <Container maxWidth="md">
       <Paper elevation={3}>
-        <form
-          onSubmit={reactHookFormReturn.handleSubmit(onSubmit)}
-        >
+        <form onSubmit={reactHookFormReturn.handleSubmit(onSubmit)}>
           <Container maxWidth="xs">
             <Stack
               spacing={2}
@@ -69,11 +63,11 @@ export const ProfileInit: FC = () => {
                 sx={{ fontWeight: 600 }}
               >
                 #基本情報
-                <Typography
-                  sx={{ color: "#FF0000", fontSize: "12px", mt: "3px" }}
-                >
-                  ※基本情報は必須です。
-                </Typography>
+              </Typography>
+              <Typography
+                sx={{ color: "#FF0000", fontSize: "12px", mt: "3px" }}
+              >
+                ※基本情報は必須です。
               </Typography>
               <Gender reactHookFormReturn={reactHookFormReturn} />
               <Age reactHookFormReturn={reactHookFormReturn} />

@@ -8,8 +8,6 @@ export const validateRequestBodyByScheme = (scheme: z.ZodObject<any>) => {
       return next();
     } catch (error) {
       if (error instanceof ZodError) {
-        console.log(`💜💜💜💜${req.body.gender}`);
-        console.log(typeof req.body.gender);
         return next(new Error(`${error.name}: ${error.message}`));
       }
     }

@@ -11,7 +11,7 @@ import { useAtom } from "jotai";
 import loginUserAtom from "../client/Atom";
 import { IUser } from "../models/UserDataSchema";
 import { AxiosError } from "axios";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
@@ -38,13 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useLayoutEffect(() => {
     getUser();
   }, []);
-  
-  // const loginUrl = ""
-  // if(!loginUser?._id && router.basePath !== loginUrl){
-  //   return (
-  //     <h1>loading...</h1>
-  //   )
-  // }
+
   return (
     <>
       <CssBaseline />

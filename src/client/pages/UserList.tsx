@@ -14,10 +14,8 @@ export const UserList: FC = () => {
 
   const getAllUsers = async () => {
     try {
-      console.log("🤕🤒");
       const res = await axios.get<IUser[]>(`${API_URL}/api/users`);
       const users = res.data;
-      console.log({ users });
       if (!users) return;
       setUsers(users);
     } catch (err) {
