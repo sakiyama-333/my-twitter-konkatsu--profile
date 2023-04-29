@@ -1,11 +1,11 @@
-import { Profile } from "passport";
-import { IUser, UserModel } from "../../models/UserDataSchema";
 import { VerifiedCallback } from "passport-jwt";
+import { ProfileWithMetaData } from "@superfaceai/passport-twitter-oauth2";
+import { UserModel } from "../../models/UserDataSchema";
 
 export const twitterAuthHandler = async (
   accessToken: string,
   refreshToken: string,
-  profile: Profile,
+  profile: ProfileWithMetaData,
   done: VerifiedCallback
 ) => {
   const currentUser = await UserModel.findOne({
@@ -15,10 +15,9 @@ export const twitterAuthHandler = async (
   if (!currentUser) {
     const newUser = await UserModel.create({
       oauthProviderId: profile.id,
-      email: profile.emails![0].value,
       name: profile.displayName,
       profilePhoto: profile.photos![0].value,
-      source: "google",
+      source: "twitter",
     });
     return done(null, newUser);
   }

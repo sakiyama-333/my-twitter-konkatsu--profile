@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { Strategy as TwitterStrategy } from "passport-twitter";
+import { Strategy as TwitterStrategy } from "@superfaceai/passport-twitter-oauth2";
 import { googleAuthHandler } from "./googleAuth.handler";
 import { signJWTAndRedirectHandler } from "./signJWTAndRedirect.handler";
 import { twitterAuthHandler } from "./twitterAuth.handler";
@@ -20,9 +20,10 @@ passport.use(
 passport.use(
   new TwitterStrategy(
     {
+      clientID: process.env.TWITTER_CLIENT_ID!,
+      clientSecret: process.env.TWITTER_CLIENT_SECRET!,
+      clientType: "confidential",
       callbackURL: process.env.TWITTER_CALLBACK_URL!,
-      consumerKey: process.env.TWITTER_ACCESS_TOKEN!,
-      consumerSecret: process.env.TWITTER_CLIENT_SECRET!,
     },
     twitterAuthHandler
   )
@@ -45,24 +46,20 @@ router.get(
     session: false,
   }),
   signJWTAndRedirectHandler
-  );
-  
+);
 
-  router.get(
-    "/twitter",
-    passport.authenticate("twitter", {
-      scope: ["profile", "email"],
-      session: false,
-    })
-  );
+router.get(
+  "/twitter",
+  passport.authenticate("twitter", {
+    scope: ["tweet.read", "users.read", "offline.access"],
+  })
+);
 
-  router.get(
-    "/twitter/callback",
-    passport.authenticate("twitter", {
-      failureRedirect: "/",
-      session: false,
-    }),
-    //TODO: 確認↓
-    signJWTAndRedirectHandler
-  );
+router.get(
+  "/twitter/callback",
+  passport.authenticate("twitter", {
+    failureRedirect: "/",
+  }),
+  signJWTAndRedirectHandler
+);
 export default router;
