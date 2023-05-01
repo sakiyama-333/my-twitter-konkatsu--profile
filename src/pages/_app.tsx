@@ -24,10 +24,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         router.push("/");
         return;
       }
+      console.log("🤣");
       setLoginUser(data);
-      if (!data.age) {
-        router.push("/profile-init");
-      }
+      // if (!data.age) {
+      //   router.push("/profile-init");
+      // }
     } catch (err) {
       if (err instanceof AxiosError) {
         router.push("/");

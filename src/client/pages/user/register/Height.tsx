@@ -2,12 +2,16 @@ import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { InputAdornment, TextField } from "@mui/material";
 import { IUser } from "../../../../models/UserDataSchema";
+import { useAtom } from "jotai";
+import loginUserAtom from "../../../Atom";
 
 type Props = {
   reactHookFormReturn: UseFormReturn<IUser, any>;
 };
 
 export const Height: FC<Props> = ({ reactHookFormReturn }) => {
+    const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+
   const {
     register,
     formState: { errors },
@@ -20,6 +24,7 @@ export const Height: FC<Props> = ({ reactHookFormReturn }) => {
       helperText={errors?.height?.message}
       type="number"
       variant="standard"
+      defaultValue={loginUser!.height ? loginUser!.height : ""}
       InputProps={{
         startAdornment: <InputAdornment position="end">cm</InputAdornment>,
       }}

@@ -129,7 +129,7 @@ export const Header: FC = () => {
               >
                 <ListItemIcon>
                   <PersonIcon fontSize="small" />
-                </ListItemIcon>{" "}
+                </ListItemIcon>
                 マイページへ
               </MenuItem>
 

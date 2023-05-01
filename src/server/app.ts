@@ -14,6 +14,7 @@ import { IUser, UserModel } from "../models/UserDataSchema";
 import { authenticateJWT } from "./auth/authenticateJWT.middleware";
 import { validateRequestBodyByScheme } from "./validation/validationSchema";
 import { IUserSchema } from "./../zod/IUserSchema";
+import connectMongo from "./mongooseConnect";
 
 const app = express();
 
@@ -49,13 +50,15 @@ app.use("/auth", authRouter);
 
 if (!process.env.MONGO_URI) throw new Error("あかん");
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("🐕😊");
-  })
-  .catch((err) => console.log(err));
+connectMongo();
+// mongoose
+//   .connect(process.env.MONGO_URI)
+//   .then(() => {
+//     console.log("🐕😊");
+//   })
+//   .catch((err) => console.log(err));
 
+//全てのユーザーを取得
 app.get("/api/users", async (req, res) => {
   req.cookies;
   try {
@@ -66,6 +69,7 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
+//ユーザー情報を更新
 app.patch(
   "/api/users",
   validateRequestBodyByScheme(IUserSchema),
@@ -83,6 +87,7 @@ app.patch(
   }
 );
 
+// TODO:この記述は自分のプロフィールページを見た時の記述
 app.get("/api/profile", authenticateJWT, async (req, res) => {
   if (!req.user) {
     throw new Error("ユーザー情報がありません");

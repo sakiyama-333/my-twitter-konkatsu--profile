@@ -2,6 +2,8 @@ import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { MenuItem, TextField } from "@mui/material";
 import { IUser } from "../../../../models/UserDataSchema";
+import { useAtom } from "jotai";
+import loginUserAtom from "../../../Atom";
 
 export const RESIDENCE = [
   {
@@ -203,13 +205,15 @@ type Props = {
 };
 
 export const Residence: FC<Props> = ({ reactHookFormReturn }) => {
+  const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+
   const { register, control } = reactHookFormReturn;
 
   return (
     <Controller
       control={control}
       name="residence"
-      defaultValue={0}
+      defaultValue={loginUser!.residence ? loginUser!.residence : 0}
       render={({ field, fieldState: { error } }) => (
         <>
           <TextField

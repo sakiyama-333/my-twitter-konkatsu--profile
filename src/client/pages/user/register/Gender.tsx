@@ -11,6 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import { IUser } from "../../../../models/UserDataSchema";
+import { useAtom } from "jotai";
+import loginUserAtom from "../../../Atom";
 
 export const GENDER_ITEM = [
   { id: "male", label: "👨男", value: 1 },
@@ -22,6 +24,8 @@ type Props = {
 };
 
 export const Gender: FC<Props> = ({ reactHookFormReturn }) => {
+  const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+  console.log(loginUser!.gender, "😉");
   const { register, control } = reactHookFormReturn;
 
   return (
@@ -30,10 +34,11 @@ export const Gender: FC<Props> = ({ reactHookFormReturn }) => {
       <Controller
         control={control}
         name="gender"
-        defaultValue={1}
         render={({ field, fieldState: { error } }) => (
           <>
-            <RadioGroup>
+            <RadioGroup
+              defaultValue={loginUser!.gender ? loginUser!.gender : 1}
+            >
               {GENDER_ITEM.map((radio) => (
                 <FormControlLabel
                   {...field}

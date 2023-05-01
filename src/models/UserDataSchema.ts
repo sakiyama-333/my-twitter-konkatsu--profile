@@ -1,4 +1,5 @@
-import { Schema, model, InferSchemaType } from "mongoose";
+import { Schema, model, InferSchemaType, models, Model } from "mongoose";
+import { string } from "zod";
 
 export type IUser = {
   _id: string;
@@ -11,11 +12,8 @@ export type IUser = {
   residence: number;
   height: number;
   source: "google" | "twitter";
-  selfExpression: {
-    first: string;
-    second: string;
-    third: string;
-  };
+  selfExpression: [string, string, string];
+
   // academicHistory: string;
   // job: string;
   // holiday: string;
@@ -59,11 +57,7 @@ const UserSchema = new Schema<IUser>({
     required: false,
   },
   selfExpression: {
-    type: {
-      first: { type: String },
-      second: { type: String },
-      third: { type: String },
-    },
+    type: [String, String, String],
     required: false,
   },
   // figure: {
@@ -92,4 +86,9 @@ const UserSchema = new Schema<IUser>({
 
 // export type UserType = InferSchemaType<typeof UserSchema>;
 
-export const UserModel = model<IUser>("User", UserSchema);
+// export const UserModel = model<IUser>("User", UserSchema);
+
+interface UserModel extends Model<IUser> {}
+export const UserModel = models.User
+  ? (models.User as UserModel)
+  : model<IUser, UserModel>("User", UserSchema);
