@@ -1,18 +1,19 @@
-import axios, { AxiosError } from "axios";
-import { FC, useState } from "react";
+import { AxiosError } from "axios";
+import { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 import {
-  Alert,
-  Button,
+  Avatar,
+  Box,
+  CircularProgress,
   Container,
+  Divider,
   Paper,
-  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
-import { styled, keyframes, css } from "@mui/system";
 import { useAtom } from "jotai";
+import Link from "next/link";
 
 import { IUser } from "../../../models/UserDataSchema";
 import { Age } from "./register/Age";
@@ -21,14 +22,12 @@ import { Residence } from "./register/Residence";
 import { Height } from "./register/Height";
 import { SelfExpression } from "./register/SelfExpression";
 import { axiosInstance } from "../../axiosInstance";
-import loginUserAtom from "../../Atom";
+import { loginUserAtom } from "../../Atom";
 import { PrimaryButton } from "../../CustomButton";
 import theme from "../../theme/Color";
+import { toast } from "react-toastify";
 
 export const Profile: FC = () => {
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [open, setOpen] = useState(true);
   const router = useRouter();
   const reactHookFormReturn = useForm<IUser>();
   const [loginUser] = useAtom(loginUserAtom);
@@ -41,130 +40,121 @@ export const Profile: FC = () => {
       payload.selfExpression[1],
       payload.selfExpression[2],
     ];
-    console.log(successMessage, "😶");
-    console.log(open, "😶");
     try {
       await axiosInstance.patch<IUser>(`/api/users`, payload);
-      setSuccessMessage("更新が完了しました");
-      setOpen(true); // 追加
-      // router.push(`/profile`);
+      toast.success("更新が完了しました😊", {
+        position: "top-center",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (err) {
-      if (err instanceof SyntaxError) {
-        setErrorMessage("構文エラーが出ました");
-        return;
-      }
       if (err instanceof AxiosError) {
-        setErrorMessage(err.response?.data);
+        toast.info("エラーが発生しました🤨再度入力してください", {
+          position: "top-center",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         return;
       }
-      setErrorMessage("予期せぬエラー");
+      toast.info("予期せぬエラーが発生しました🤨再度入力してください", {
+        position: "top-center",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
-
+  if (!loginUser)
+    return (
+      <Box sx={{ textAlign: "center", height: "100vh" }}>
+        <CircularProgress />
+      </Box>
+    );
   return (
-    <>
-      {successMessage && ( // 追加
-        <StyledSnackbar
-          open={open}
-          autoHideDuration={3000}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          onClose={(event, reason) => {
-            setSuccessMessage("");
-            setOpen(false);
-          }}
-          role="alert"
+    <Container maxWidth="md">
+      <Paper elevation={3}>
+        <Box
+          sx={{ width: "90%", display: "flex", justifyContent: "right", pt: 6 }}
         >
-          <Alert variant="filled" severity="success">
-            {successMessage}
-          </Alert>
-        </StyledSnackbar>
-      )}
-      {errorMessage && ( // 追加
-        <StyledSnackbar
-          open={open}
-          autoHideDuration={3000}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          onClose={(event, reason) => {
-            setOpen(false);
-          }}
-          role="alert"
-        >
-          <Alert variant="filled" severity="error" sx={{ width: "100%" }}>
-            {errorMessage}
-          </Alert>
-        </StyledSnackbar>
-      )}
-      <Container maxWidth="md">
-        <Paper elevation={3}>
-          <form onSubmit={reactHookFormReturn.handleSubmit(onSubmit)}>
-            <Container maxWidth="xs">
-              <Stack
-                spacing={2}
-                sx={{
-                  width: "90%",
-                  m: "0 auto",
-                  p: "48px 0",
-                }}
-              >
-                <Typography
-                  color={theme.palette.customDarkGreen.main}
-                  // TODO:フォントをボールドに設定する
-                  sx={{ fontWeight: 600 }}
-                >
-                  #基本情報
-                </Typography>
-                <Typography
-                  sx={{ color: "#FF0000", fontSize: "12px", mt: "3px" }}
-                >
-                  ※基本情報は必須です。
-                </Typography>
-                <Gender reactHookFormReturn={reactHookFormReturn} />
-                <Age reactHookFormReturn={reactHookFormReturn} />
-                <Residence reactHookFormReturn={reactHookFormReturn} />
-                <Height reactHookFormReturn={reactHookFormReturn} />
+          <Link
+            href={`/users/${loginUser?._id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <PrimaryButton>プロフィールを確認する</PrimaryButton>
+          </Link>
+        </Box>
+        <form onSubmit={reactHookFormReturn.handleSubmit(onSubmit)}>
+          <Stack
+            spacing={4}
+            sx={{
+              width: "90%",
+              maxWidth: "480px",
+              m: "0 auto",
+              p: "48px 0",
+            }}
+          >
+            <Typography
+              color={theme.palette.customDarkGreen.main}
+              // TODO:フォントをボールドに設定する
+              sx={{ fontWeight: 600 }}
+            >
+              #基本情報
+            </Typography>
+            <Box sx={{ display: "flex", gap: "16px" }}>
+              <Avatar
+                alt={loginUser?.name}
+                src={loginUser?.profilePhoto as string}
+                sx={{ width: 60, height: 60 }}
+              />
+              <p>{loginUser?.name}</p>
+            </Box>
+            <Gender reactHookFormReturn={reactHookFormReturn} />
+            <Age reactHookFormReturn={reactHookFormReturn} />
+            <Residence reactHookFormReturn={reactHookFormReturn} />
+            <Height reactHookFormReturn={reactHookFormReturn} />
+          </Stack>
+          <Divider variant="middle" />
 
-                <Typography
-                  color={theme.palette.customDarkGreen.main}
-                  // TODO:フォントをボールドに設定する
-                  sx={{ fontWeight: 600, pt: 6 }}
-                >
-                  #その他
-                </Typography>
-                <SelfExpression reactHookFormReturn={reactHookFormReturn} />
-              </Stack>
-            </Container>
-            <Container maxWidth="lg" sx={{ textAlign: "center", pb: "48px" }}>
-              <PrimaryButton type="submit" variant="contained">
-                登録
-              </PrimaryButton>
-            </Container>
-          </form>
-        </Paper>
-      </Container>
-    </>
+          <Stack
+            spacing={4}
+            sx={{
+              width: "90%",
+              maxWidth: "480px",
+              m: "0 auto",
+              p: "48px 0",
+            }}
+          >
+            <Typography
+              color={theme.palette.customDarkGreen.main}
+              // TODO:フォントをボールドに設定する
+              sx={{ fontWeight: 600 }}
+            >
+              #その他
+            </Typography>
+            <SelfExpression reactHookFormReturn={reactHookFormReturn} />
+          </Stack>
+
+          <Container maxWidth="lg" sx={{ textAlign: "center", pb: "48px" }}>
+            <PrimaryButton type="submit" variant="contained">
+              更新
+            </PrimaryButton>
+          </Container>
+        </form>
+      </Paper>
+    </Container>
   );
 };
-
-const StyledSnackbar = styled(Snackbar)(
-  ({ theme }) => css`
-    animation-name: ${snackbarInRight};
-    animation-duration: 1.3s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-  `
-);
-const snackbarInRight = keyframes`
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    
-    `;

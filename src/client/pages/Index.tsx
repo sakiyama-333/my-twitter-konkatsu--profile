@@ -49,7 +49,15 @@ export const Index: FC = () => {
 
   return (
     <div>
-      <Container maxWidth="lg" sx={{ textAlign: "center", pb: "48px" }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "24px",
+          pb: "48px",
+        }}
+      >
         {/* TODO: Googleログイン用のボタンを別途用意する */}
         <PrimaryButton type="submit" variant="contained" onClick={googleAuth}>
           Googleでログイン／登録

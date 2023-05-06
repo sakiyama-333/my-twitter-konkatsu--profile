@@ -17,7 +17,6 @@ export const signJWTAndRedirectHandler: RequestHandler = (req, res, next) => {
   );
   req.session.destroy((err) => {
     res.cookie("token", jwt, { maxAge: 86400 * 1000, httpOnly: true });
-    res.cookie("token", jwt, { maxAge: 86400 * 1000, httpOnly: true });
-    res.redirect("http://localhost:3000/profile-init");
+    res.redirect("http://localhost:3000/profile");
   });
 };

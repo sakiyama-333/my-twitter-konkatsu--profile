@@ -3,15 +3,11 @@ import type {
   NextPage,
   InferGetServerSidePropsType,
 } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import { useEffect } from "react";
-import axios from "axios";
 import { UserProfile } from "../../client/pages/users/UserProfile";
 
 import { SEO } from "../../client/SEO";
 import connectMongo from "../../server/mongooseConnect";
-import { IUser, UserModel } from "../../models/UserDataSchema";
+import { UserModel } from "../../models/UserDataSchema";
 import { IUserToProfileDto, ProfileDto } from "../../server/profile.dto";
 
 interface Props {
@@ -22,7 +18,7 @@ const UserProfilePage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ user }) => {
   console.log({ user });
-  if (!user) throw new Error("エラーが発生しました😭");;
+  if (!user) throw new Error("エラーが発生しました😭");
   return (
     //TODO:userがnullだったらエラーページを出す
 

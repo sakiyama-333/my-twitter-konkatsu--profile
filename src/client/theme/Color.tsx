@@ -2,10 +2,15 @@ import { createTheme } from "@mui/material";
 
 const theme = createTheme({
   palette: {
+    primary: {
+      light: "#126B6D",
+      main: "#0B4142",
+      dark: "#062526",
+    },
     customPink: {
-      light: "#F8B8B8",
-      main: "#F58C8C",
-      dark: "#DB7F7F",
+      light: "#F7A5A5",
+      main: "#F47575",
+      dark: "#D86868",
     },
     customMintGreen: {
       light: "#CCE9EA",
@@ -24,10 +29,12 @@ const theme = createTheme({
     },
     customBackground: {
       light: "#F9ECCC",
-      main: "#FBF5E6",
+      main: "#FEF9F2",
       dark: "#F3E2B8",
     },
   },
 });
 
 export default theme;
+
+//#68d7d9

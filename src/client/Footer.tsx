@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
-import { Link, ThemeProvider, styled } from "@mui/material";
+import { Link, styled } from "@mui/material";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
 import theme from "./theme/Color";
@@ -38,43 +38,42 @@ const linkItems = [
 
 export const Footer: FC = () => {
   return (
-      <div>
-        <Sfooter>
-          <Slayout>
-            <Image src="/logo.svg" alt="logo image" width={120} height={70} />
-            <div className="linkItem">
-              {linkItems.map((item) => {
-                if (item.text !== "作った人") {
-                  return (
-                    <Link
-                      href={item.link}
-                      key={item.text}
-                      color={theme.palette.customDarkGreen.main}
-                    >
-                      {item.text}
-                    </Link>
-                  );
-                } else {
-                  return (
-                    <Link
-                      href={item.link}
-                      key={item.text}
-                      color={theme.palette.customDarkGreen.main}
-                    >
-                      {item.text}
-                      <TwitterIcon />
-                    </Link>
-                  );
-                }
-              })}
-            </div>
-            <div className="logoAndCopyright">
-              <small>&copy; 2023 MY Twitter 婚活プロフィール</small>
-            </div>
-          </Slayout>
-        </Sfooter>
-        <Sdecoration />
-      </div>
+    <div>
+      <Sfooter>
+        <Slayout>
+          <Image src="/logo.svg" alt="logo image" width={120} height={120} />
+          <div className="linkItem">
+            {linkItems.map((item) => {
+              if (item.text !== "作った人") {
+                return (
+                  <Link
+                    href={item.link}
+                    key={item.text}
+                    color={theme.palette.customDarkGreen.main}
+                  >
+                    {item.text}
+                  </Link>
+                );
+              } else {
+                return (
+                  <Link
+                    href={item.link}
+                    key={item.text}
+                    color={theme.palette.customDarkGreen.main}
+                  >
+                    {item.text}
+                    <TwitterIcon />
+                  </Link>
+                );
+              }
+            })}
+          </div>
+          <div className="logoAndCopyright">
+            <small>&copy; 2023 TWIKON - ツイコン</small>
+          </div>
+        </Slayout>
+      </Sfooter>
+    </div>
   );
 };
 
@@ -83,6 +82,7 @@ const Sfooter = styled("footer")({
   marginTop: "48px",
   padding: "40px 0",
   background: theme.palette.customMintGreen.main,
+  borderBottom: `5px solid ${theme.palette.customPink.main}`,
 });
 
 const Slayout = styled("div")({
@@ -118,9 +118,4 @@ const Slayout = styled("div")({
     fontSize: "10px",
     textAlign: "center",
   },
-});
-
-const Sdecoration = styled("div")({
-  height: "5px",
-  background: theme.palette.customPink.main,
 });

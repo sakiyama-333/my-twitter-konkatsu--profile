@@ -3,7 +3,8 @@ import { Controller, UseFormReturn } from "react-hook-form";
 import { MenuItem, TextField } from "@mui/material";
 import { IUser } from "../../../../models/UserDataSchema";
 import { useAtom } from "jotai";
-import loginUserAtom from "../../../Atom";
+import {loginUserAtom} from "../../../Atom";
+import theme from "../../../theme/Color";
 
 export const RESIDENCE = [
   {
@@ -213,17 +214,23 @@ export const Residence: FC<Props> = ({ reactHookFormReturn }) => {
     <Controller
       control={control}
       name="residence"
-      defaultValue={loginUser!.residence ? loginUser!.residence : 0}
+      defaultValue={loginUser?.residence ?? 0}
       render={({ field, fieldState: { error } }) => (
         <>
           <TextField
             {...field}
+            required
             select
             fullWidth
-            label="居住地"
+            label="居住地(入力必須)"
             error={!!error?.message}
             helperText={error?.message}
             variant="standard"
+            sx={{
+              ".MuiFormLabel-asterisk": {
+                color: theme.palette.error.main,
+              },
+            }}
           >
             {RESIDENCE.map((residence) => (
               <MenuItem

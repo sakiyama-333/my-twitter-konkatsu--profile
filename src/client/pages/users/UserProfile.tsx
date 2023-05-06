@@ -1,21 +1,15 @@
 import { FC } from "react";
-import { useRouter } from "next/router";
 import {
   Avatar,
   Box,
-  CircularProgress,
   Container,
   Paper,
   Stack,
   Typography,
 } from "@mui/material";
 import theme from "../../theme/Color";
-import loginUserAtom from "../../Atom";
-import { useAtom } from "jotai";
 import { RESIDENCE } from "../user/register/Residence";
 import { GENDER_ITEM } from "../user/register/Gender";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { ParsedUrlQuery } from "querystring";
 import { ProfileDto } from "../../../server/profile.dto";
 
 export const UserProfile: FC<ProfileDto> = ({ ...user }) => {
@@ -91,7 +85,7 @@ export const UserProfile: FC<ProfileDto> = ({ ...user }) => {
                 <Typography
                   color={theme.palette.customDarkGreen.main}
                   // TODO:フォントをボールドに設定する
-                  sx={{ fontWeight: 600, pt: 6 }}
+                  sx={{ mb: 2, pt: 6, fontWeight: 600 }}
                 >
                   #その他
                 </Typography>
@@ -106,9 +100,17 @@ export const UserProfile: FC<ProfileDto> = ({ ...user }) => {
                   <Box sx={{ color: "grey.600", maxWidth: 100 }}>
                     自分を三言で表すと
                   </Box>
-                  <Box sx={{ color: "black" }}>{user?.selfExpression}</Box>
-                  {/* <Box sx={{ color: "black" }}>{user?.selfExpression[1]}</Box> */}
-                  {/* <Box sx={{ color: "black" }}>{user?.selfExpression[2]}</Box> */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: { xs: "column", sm: "row" },
+                      gap: "8px",
+                    }}
+                  >
+                    <Box sx={{ color: "black" }}>{user?.selfExpression[0]}</Box>
+                    <Box sx={{ color: "black" }}>{user?.selfExpression[1]}</Box>
+                    <Box sx={{ color: "black" }}>{user?.selfExpression[2]}</Box>
+                  </Box>
                 </Box>
               </Box>
             </div>

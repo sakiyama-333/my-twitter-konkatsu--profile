@@ -1,5 +1,5 @@
 import { Profile } from "passport";
-import { IUser, UserModel } from "../../models/UserDataSchema";
+import { UserModel } from "../../models/UserDataSchema";
 import { VerifiedCallback } from "passport-jwt";
 
 export const googleAuthHandler = async (

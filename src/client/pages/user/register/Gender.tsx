@@ -12,7 +12,8 @@ import {
 } from "@mui/material";
 import { IUser } from "../../../../models/UserDataSchema";
 import { useAtom } from "jotai";
-import loginUserAtom from "../../../Atom";
+import { loginUserAtom } from "../../../Atom";
+import theme from "../../../theme/Color";
 
 export const GENDER_ITEM = [
   { id: "male", label: "👨男", value: 1 },
@@ -24,21 +25,25 @@ type Props = {
 };
 
 export const Gender: FC<Props> = ({ reactHookFormReturn }) => {
-  const [loginUser, setLoginUser] = useAtom(loginUserAtom);
-  console.log(loginUser!.gender, "😉");
+  const [loginUser] = useAtom(loginUserAtom);
   const { register, control } = reactHookFormReturn;
 
   return (
-    <FormControl>
-      <FormLabel>性別</FormLabel>
+    <FormControl
+      required
+      sx={{
+        ".MuiFormLabel-asterisk": {
+          color: theme.palette.error.main,
+        },
+      }}
+    >
+      <FormLabel sx={{ fontSize: "12px" }}>性別(入力必須)</FormLabel>
       <Controller
         control={control}
         name="gender"
         render={({ field, fieldState: { error } }) => (
           <>
-            <RadioGroup
-              defaultValue={loginUser!.gender ? loginUser!.gender : 1}
-            >
+            <RadioGroup defaultValue={loginUser?.gender ?? 1}>
               {GENDER_ITEM.map((radio) => (
                 <FormControlLabel
                   {...field}

@@ -4,7 +4,6 @@ env.config();
 import express from "express";
 import { JwtPayload } from "jsonwebtoken";
 import passport from "passport";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRouter from "./auth/route";
@@ -51,12 +50,6 @@ app.use("/auth", authRouter);
 if (!process.env.MONGO_URI) throw new Error("あかん");
 
 connectMongo();
-// mongoose
-//   .connect(process.env.MONGO_URI)
-//   .then(() => {
-//     console.log("🐕😊");
-//   })
-//   .catch((err) => console.log(err));
 
 //全てのユーザーを取得
 app.get("/api/users", async (req, res) => {
@@ -87,7 +80,7 @@ app.patch(
   }
 );
 
-// TODO:この記述は自分のプロフィールページを見た時の記述
+// MEMO:この記述は自分のプロフィールページを見た時の記述
 app.get("/api/profile", authenticateJWT, async (req, res) => {
   if (!req.user) {
     throw new Error("ユーザー情報がありません");
@@ -98,6 +91,25 @@ app.get("/api/profile", authenticateJWT, async (req, res) => {
     res.status(200).json(userData);
   } catch (err) {
     console.log(`🧹${err}`);
+  }
+});
+
+app.delete("/api/logout", async (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).send("ログアウトしました");
+  } catch (err) {
+    res.status(500).send("ログアウトに失敗しました");
+  }
+});
+
+app.delete("/api/withdrawal", async (req, res) => {
+  const id = req.body.id;
+  try {
+    await UserModel.deleteOne({ _id: id });
+    res.status(200).send("退会しました");
+  } catch (err) {
+    res.status(500).send("アカウント削除に失敗しました");
   }
 });
 

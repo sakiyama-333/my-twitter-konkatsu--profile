@@ -12,7 +12,8 @@ import {
 
 import { IUser } from "../../../../models/UserDataSchema";
 import { useAtom } from "jotai";
-import loginUserAtom from "../../../Atom";
+import { loginUserAtom } from "../../../Atom";
+import theme from "../../../theme/Color";
 
 type Props = {
   reactHookFormReturn: UseFormReturn<IUser, any>;
@@ -21,7 +22,6 @@ type Props = {
 export const Age: FC<Props> = ({ reactHookFormReturn }) => {
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
 
-
   const {
     register,
     formState: { errors },
@@ -29,13 +29,18 @@ export const Age: FC<Props> = ({ reactHookFormReturn }) => {
 
   return (
     <TextField
-      label="年齢"
+    required
+      label="年齢(入力必須)"
       error={!!errors?.age}
       helperText={errors?.age?.message}
       type="number"
-      variant="outlined"
-      defaultValue={loginUser!.age ? loginUser!.age : ""}
-      sx={{ width: "100%" }}
+      variant="standard"
+      defaultValue={loginUser?.age ?? ""}
+      sx={{
+        ".MuiFormLabel-asterisk": {
+          color: theme.palette.error.main,
+        },
+      }}
       {...register("age", {
         required: "入力必須項目です",
         valueAsNumber: true,

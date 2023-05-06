@@ -1,6 +1,6 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import type { AppProps } from "next/app";
-import { styled } from "@mui/material/styles";
+import { ThemeProvider, styled } from "@mui/material/styles";
 
 import { Header } from "../client/Header";
 import { Footer } from "../client/Footer";
@@ -8,13 +8,16 @@ import theme from "../client/theme/Color";
 import { axiosInstance } from "../client/axiosInstance";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import loginUserAtom from "../client/Atom";
+import { loginUserAtom } from "../client/Atom";
 import { IUser } from "../models/UserDataSchema";
 import { AxiosError } from "axios";
 import { useLayoutEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+
   const router = useRouter();
 
   const getUser = async () => {
@@ -24,11 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         router.push("/");
         return;
       }
-      console.log("🤣");
       setLoginUser(data);
-      // if (!data.age) {
-      //   router.push("/profile-init");
-      // }
     } catch (err) {
       if (err instanceof AxiosError) {
         router.push("/");
@@ -42,14 +41,17 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <CssBaseline />
-      <SGlobalWrap>
-        <Header />
-        <div>
-          <Component {...pageProps} />
-        </div>
-        <Footer />
-      </SGlobalWrap>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <SGlobalWrap>
+          <Header />
+          <div>
+            <Component {...pageProps} />
+          </div>
+          <Footer />
+          <ToastContainer />
+        </SGlobalWrap>
+      </ThemeProvider>
     </>
   );
 }

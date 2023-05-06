@@ -1,16 +1,17 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField, styled } from "@mui/material";
 import { IUser } from "../../../../models/UserDataSchema";
 import { useAtom } from "jotai";
-import loginUserAtom from "../../../Atom";
+import { loginUserAtom } from "../../../Atom";
+import theme from "../../../theme/Color";
 
 type Props = {
   reactHookFormReturn: UseFormReturn<IUser, any>;
 };
 
 export const Height: FC<Props> = ({ reactHookFormReturn }) => {
-    const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+  const [loginUser, setLoginUser] = useAtom(loginUserAtom);
 
   const {
     register,
@@ -19,14 +20,20 @@ export const Height: FC<Props> = ({ reactHookFormReturn }) => {
 
   return (
     <TextField
-      label="身長"
+      required
+      label="身長(入力必須)"
       error={!!errors?.height}
       helperText={errors?.height?.message}
       type="number"
       variant="standard"
-      defaultValue={loginUser!.height ? loginUser!.height : ""}
+      defaultValue={loginUser?.height ?? ""}
+      sx={{
+        ".MuiFormLabel-asterisk": {
+          color: theme.palette.error.main,
+        },
+      }}
       InputProps={{
-        startAdornment: <InputAdornment position="end">cm</InputAdornment>,
+        endAdornment: <InputAdornment position="end">cm</InputAdornment>,
       }}
       {...register("height", {
         required: "入力必須項目です",
@@ -37,3 +44,9 @@ export const Height: FC<Props> = ({ reactHookFormReturn }) => {
     />
   );
 };
+
+// const STextField = styled(TextField)({
+//   ".MuiFormLabel-asterisk": {
+//     color: theme.palette.error.main,
+//   },
+// });
