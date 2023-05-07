@@ -38,6 +38,7 @@ app.use(passport.initialize());
 app.use(cookieParser());
 
 app.use(
+  //TODO: secretを変更
   session({
     secret: "your_secret_key",
     resave: false,
@@ -48,6 +49,8 @@ app.use(
 app.use("/auth", authRouter);
 
 if (!process.env.MONGO_URI) throw new Error("あかん");
+console.log("process.env.MONGO_URI: ", process.env.MONGO_URI)
+console.log("process.env.MONGO_URI type: ", typeof process.env.MONGO_URI)
 
 connectMongo();
 
