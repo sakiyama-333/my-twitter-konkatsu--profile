@@ -11,7 +11,7 @@ import { useAtom } from "jotai";
 import { loginUserAtom } from "../client/Atom";
 import { IUser } from "../models/UserDataSchema";
 import { AxiosError } from "axios";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getUser();
   }, []);
 

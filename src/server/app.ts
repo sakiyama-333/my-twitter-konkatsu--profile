@@ -16,6 +16,7 @@ import { IUserSchema } from "./../zod/IUserSchema";
 import connectMongo from "./mongooseConnect";
 
 const app = express();
+const PORT = new URL(process.env.NEXT_PUBLIC_API_URL!).port ?? 8080;
 
 app.use(
   cors({
@@ -51,9 +52,9 @@ if (!process.env.MONGO_URI) throw new Error("あかん");
 
 connectMongo();
 
+
 //全てのユーザーを取得
 app.get("/api/users", async (req, res) => {
-  req.cookies;
   try {
     const allUserData = await UserModel.find();
     res.status(200).json(allUserData);
@@ -113,7 +114,6 @@ app.delete("/api/withdrawal", async (req, res) => {
   }
 });
 
-const PORT = new URL(process.env.NEXT_PUBLIC_API_URL!).port ?? 8080;
 app.listen(PORT, () => {
   console.log(`💓Server start: http://localhost:${PORT}`);
 });

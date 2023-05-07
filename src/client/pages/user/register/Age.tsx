@@ -1,13 +1,7 @@
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import {
-  Box,
-  Chip,
-  FormHelperText,
-  Grid,
-  InputLabel,
   TextField,
-  Typography,
 } from "@mui/material";
 
 import { IUser } from "../../../../models/UserDataSchema";

@@ -27,8 +27,7 @@ export const SelfExpression: FC<Props> = ({ reactHookFormReturn }) => {
         helperText={errors?.selfExpression?.[0]?.message || ""}
         type="string"
         variant="standard"
-        defaultValue={""}
-        value={loginUser?.selfExpression[0]}
+        defaultValue={loginUser?.selfExpression[0] ?? ""}
         sx={{
           ".MuiFormLabel-asterisk": {
             color: theme.palette.error.main,
@@ -47,8 +46,7 @@ export const SelfExpression: FC<Props> = ({ reactHookFormReturn }) => {
         helperText={errors?.selfExpression?.[1]?.message || ""}
         type="string"
         variant="standard"
-        defaultValue={""}
-        value={loginUser?.selfExpression[1]}
+        defaultValue={loginUser?.selfExpression[1] ?? ""}
         sx={{
           ".MuiFormLabel-asterisk": {
             color: theme.palette.error.main,
@@ -67,8 +65,7 @@ export const SelfExpression: FC<Props> = ({ reactHookFormReturn }) => {
         helperText={errors?.selfExpression?.[2]?.message || ""}
         type="string"
         variant="standard"
-        defaultValue={""}
-        value={loginUser?.selfExpression[2]}
+        defaultValue={loginUser?.selfExpression[2] ?? ""}
         sx={{
           ".MuiFormLabel-asterisk": {
             color: theme.palette.error.main,
