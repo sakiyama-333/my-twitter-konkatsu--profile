@@ -16,13 +16,12 @@ import { IUserSchema } from "./../zod/IUserSchema";
 import connectMongo from "./mongooseConnect";
 
 const app = express();
-const PORT = new URL(process.env.NEXT_PUBLIC_API_URL!).port ?? 8080;
 
 app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://konnkatu.com",
+      "https://twikon.omu-omu.com",
       process.env.NGROK as string,
     ],
     credentials: true,
@@ -114,6 +113,8 @@ app.delete("/api/withdrawal", async (req, res) => {
   }
 });
 
+const PORT = process.env.PORT;
+if (!PORT) throw new Error("envファイルが読み込めていません");
 app.listen(PORT, () => {
   console.log(`💓Server start: http://localhost:${PORT}`);
 });
