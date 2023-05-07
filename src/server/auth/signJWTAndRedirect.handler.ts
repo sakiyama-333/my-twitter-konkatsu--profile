@@ -20,6 +20,6 @@ export const signJWTAndRedirectHandler: RequestHandler = (req, res, next) => {
   );
   req.session.destroy((err) => {
     res.cookie("token", jwt, { maxAge: 86400 * 1000, httpOnly: true });
-    res.redirect(`${process.env.NEXT_PUBLIC_API_URL}/profile`);
+    res.redirect("https://twikon.omu-omu.com/profile");
   });
 };
