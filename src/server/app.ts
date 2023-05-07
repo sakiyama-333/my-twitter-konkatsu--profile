@@ -47,7 +47,7 @@ app.use(
 
 app.use("/auth", authRouter);
 
-if (!process.env.NEXT_PUBLIC_MONGO_URI) throw new Error("あかん");
+if (!process.env.MONGO_URI) throw new Error("あかん");
 
 connectMongo();
 
