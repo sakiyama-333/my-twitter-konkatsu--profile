@@ -47,10 +47,9 @@ app.use(
 
 app.use("/auth", authRouter);
 
-if (!process.env.MONGO_URI) throw new Error("あかん");
+if (!process.env.NEXT_PUBLIC_MONGO_URI) throw new Error("あかん");
 
 connectMongo();
-
 
 //全てのユーザーを取得
 app.get("/api/users", async (req, res) => {
