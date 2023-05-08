@@ -2,7 +2,7 @@ import { FC, MouseEvent, useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/image";
-import { Container, Divider, styled } from "@mui/material";
+import { Container, Divider, ListItemIcon, styled } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -133,7 +133,7 @@ export const Header: FC = () => {
               priority
             />
           </Link>
-          <Grid container spacing={2} sx={{ alignItems: "center" }}>
+          <Grid container spacing={3} sx={{ alignItems: "center" }}>
             <SearchIcon
               sx={{
                 width: 32,
@@ -162,20 +162,28 @@ export const Header: FC = () => {
               >
                 <MenuItem onClick={profileHandler}>
                   {/* <PersonIcon fontSize="small" /> */}
-                  <BsFillPersonFill />
+                  <ListItemIcon>
+                    <BsFillPersonFill />
+                  </ListItemIcon>
                   マイページへ
                 </MenuItem>
+                <Divider/>
                 <MenuItem onClick={logoutHandler}>
                   {/* <Logout fontSize="small" /> */}
-                  <FiLogOut />
+                  <ListItemIcon>
+                    <FiLogOut />
+                  </ListItemIcon>
                   ログアウトする
                 </MenuItem>
+                <Divider/>
                 <MenuItem
                   onClick={withdrawalHandler}
                   sx={{ color: theme.palette.error.main }}
                 >
                   {/* <PersonOffIcon fontSize="small" /> */}
-                  <MdPersonOff />
+                  <ListItemIcon>
+                    <MdPersonOff />
+                  </ListItemIcon>
                   退会する
                 </MenuItem>
               </Menu>
