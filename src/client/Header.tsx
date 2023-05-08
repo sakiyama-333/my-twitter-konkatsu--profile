@@ -139,7 +139,7 @@ export const Header: FC = () => {
               }}
             />
 
-              <div>
+              {/* <div>
                 <IconButton
                   onClick={handleClick}
                   size="small"
@@ -219,7 +219,7 @@ export const Header: FC = () => {
                     </Typography>
                   </MenuItem>
                 </Menu>
-              </div>
+              </div> */}
 
           </Grid>
         </Container>
