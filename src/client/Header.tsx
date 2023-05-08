@@ -2,7 +2,7 @@ import { FC, MouseEvent, useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/image";
-import { Container, styled } from "@mui/material";
+import { Container, Divider, styled } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -157,9 +157,26 @@ export const Header: FC = () => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={profileHandler}>マイページへ</MenuItem>
-                <MenuItem onClick={logoutHandler}>ログアウトする</MenuItem>
-                <MenuItem onClick={withdrawalHandler}>退会する</MenuItem>
+                <MenuItem onClick={profileHandler}>
+                  <PersonIcon fontSize="small" sx={{ opacity: 0.5, mr: 1 }} />
+                  マイページへ
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={logoutHandler}>
+                  <Logout fontSize="small" sx={{ opacity: 0.5, mr: 1 }} />
+                  ログアウトする
+                </MenuItem>
+                <Divider />
+                <MenuItem
+                  onClick={withdrawalHandler}
+                  sx={{ color: theme.palette.error.main }}
+                >
+                  <PersonOffIcon
+                    fontSize="small"
+                    sx={{ color: "#000000", opacity: 0.5, mr: 1 }}
+                  />
+                  退会する
+                </MenuItem>
               </Menu>
             </div>
           </Grid>
