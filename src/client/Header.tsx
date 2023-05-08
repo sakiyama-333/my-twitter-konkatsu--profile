@@ -158,18 +158,18 @@ export const Header: FC = () => {
                 }}
               >
                 <MenuItem onClick={handleClose}>
-                  <PersonIcon fontSize="small" />
+                  {/* <PersonIcon fontSize="small" /> */}
                   マイページへ
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Logout fontSize="small" />
+                  {/* <Logout fontSize="small" /> */}
                   ログアウトする
                 </MenuItem>
                 <MenuItem
                   onClick={handleClose}
                   sx={{ color: theme.palette.error.main }}
                 >
-                  <PersonOffIcon fontSize="small" />
+                  {/* <PersonOffIcon fontSize="small" /> */}
                   退会する
                 </MenuItem>
               </Menu>
