@@ -165,7 +165,7 @@ export const Header: FC = () => {
                   sx={{ width: 40, height: 40 }}
                 />
               </IconButton>
-              <Menu
+              {/* <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
@@ -229,7 +229,7 @@ export const Header: FC = () => {
                     退会する
                   </Typography>
                 </MenuItem>
-              </Menu>
+              </Menu> */}
             </div>
           </Grid>
         </Container>
