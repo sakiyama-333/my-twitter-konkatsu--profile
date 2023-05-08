@@ -138,7 +138,7 @@ export const Header: FC = () => {
                 color: theme.palette.customDarkGreen.main,
               }}
             />
-            {loginUser ? (
+
               <div>
                 <IconButton
                   onClick={handleClick}
@@ -220,9 +220,7 @@ export const Header: FC = () => {
                   </MenuItem>
                 </Menu>
               </div>
-            ) : (
-              <div></div>
-            )}
+
           </Grid>
         </Container>
       </Sheader>
