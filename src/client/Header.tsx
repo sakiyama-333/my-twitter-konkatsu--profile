@@ -18,6 +18,9 @@ import { loginUserAtom } from "./Atom";
 import axios, { AxiosError } from "axios";
 import { axiosInstance } from "./axiosInstance";
 import { toast } from "react-toastify";
+import { BsFillPersonFill } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
+import { MdPersonOff } from "react-icons/md";
 
 export const Header: FC = () => {
   const router = useRouter();
@@ -159,10 +162,12 @@ export const Header: FC = () => {
               >
                 <MenuItem onClick={handleClose}>
                   {/* <PersonIcon fontSize="small" /> */}
+                  <BsFillPersonFill />
                   マイページへ
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   {/* <Logout fontSize="small" /> */}
+                  <FiLogOut />
                   ログアウトする
                 </MenuItem>
                 <MenuItem
@@ -170,6 +175,7 @@ export const Header: FC = () => {
                   sx={{ color: theme.palette.error.main }}
                 >
                   {/* <PersonOffIcon fontSize="small" /> */}
+                  <MdPersonOff />
                   退会する
                 </MenuItem>
               </Menu>
