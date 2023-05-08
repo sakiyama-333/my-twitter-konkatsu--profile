@@ -30,14 +30,14 @@ export const Header: FC = () => {
   const router = useRouter();
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  // const open = Boolean(anchorEl);
+  // const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const logoutHandler = async () => {
-    handleClose();
+    // handleClose();
     try {
       const res = await axiosInstance.delete("/api/logout");
       toast.success(res.data, {
@@ -70,7 +70,7 @@ export const Header: FC = () => {
   };
 
   const withdrawalHandler = async () => {
-    handleClose();
+    // handleClose();
     try {
       const res = await axiosInstance.delete("/api/withdrawal", {
         data: { id: loginUser?._id },
@@ -105,9 +105,9 @@ export const Header: FC = () => {
     }
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   return (
     <>
@@ -151,11 +151,8 @@ export const Header: FC = () => {
               <div>ログインしていない</div>
             )} */}
             <div>
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 2 }}
-              >
+              {/* <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}> */}
+              <IconButton size="small" sx={{ ml: 2 }}>
                 <Avatar
                   alt={loginUser?.name}
                   src={loginUser?.profilePhoto}
@@ -165,9 +162,9 @@ export const Header: FC = () => {
               <Menu
                 // anchorEl={anchorEl}
                 id="account-menu"
-                open={open}
-                onClose={handleClose}
-                onClick={handleClose}
+                open={true}
+                // onClose={handleClose}
+                // onClick={handleClose}
                 PaperProps={{
                   elevation: 0,
                   sx: {
@@ -198,10 +195,10 @@ export const Header: FC = () => {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <MenuItem
-                  // onClick={() => {
-                  //   router.push("/profile");
-                  //   handleClose();
-                  // }}
+                // onClick={() => {
+                //   router.push("/profile");
+                //   handleClose();
+                // }}
                 >
                   <ListItemIcon>
                     <PersonIcon fontSize="small" />
