@@ -160,18 +160,18 @@ export const Header: FC = () => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={profileHandler}>
                   {/* <PersonIcon fontSize="small" /> */}
                   <BsFillPersonFill />
                   マイページへ
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={logoutHandler}>
                   {/* <Logout fontSize="small" /> */}
                   <FiLogOut />
                   ログアウトする
                 </MenuItem>
                 <MenuItem
-                  onClick={handleClose}
+                  onClick={withdrawalHandler}
                   sx={{ color: theme.palette.error.main }}
                 >
                   {/* <PersonOffIcon fontSize="small" /> */}
