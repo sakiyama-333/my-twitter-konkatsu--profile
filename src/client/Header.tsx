@@ -158,21 +158,18 @@ export const Header: FC = () => {
                 }}
               >
                 <MenuItem onClick={profileHandler}>
-                  <PersonIcon fontSize="small" sx={{ opacity: 0.5, mr: 1 }} />
+                  <PersonIcon fontSize="small" />
                   マイページへ
                 </MenuItem>
                 <MenuItem onClick={logoutHandler}>
-                  <Logout fontSize="small" sx={{ opacity: 0.5, mr: 1 }} />
+                  <Logout fontSize="small" />
                   ログアウトする
                 </MenuItem>
                 <MenuItem
                   onClick={withdrawalHandler}
                   sx={{ color: theme.palette.error.main }}
                 >
-                  <PersonOffIcon
-                    fontSize="small"
-                    sx={{ color: "#000000", opacity: 0.5, mr: 1 }}
-                  />
+                  <PersonOffIcon fontSize="small" />
                   退会する
                 </MenuItem>
               </Menu>
