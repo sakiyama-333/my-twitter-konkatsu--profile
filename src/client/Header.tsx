@@ -2,17 +2,10 @@ import { FC, MouseEvent, useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/image";
-import {
-  Avatar,
-  Container,
-  Divider,
-  IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Container, styled } from "@mui/material";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Unstable_Grid2";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
@@ -30,14 +23,16 @@ export const Header: FC = () => {
   const router = useRouter();
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
 
-  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  // const open = Boolean(anchorEl);
-  // const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const logoutHandler = async () => {
-    // handleClose();
     try {
       const res = await axiosInstance.delete("/api/logout");
       toast.success(res.data, {
@@ -70,7 +65,6 @@ export const Header: FC = () => {
   };
 
   const withdrawalHandler = async () => {
-    // handleClose();
     try {
       const res = await axiosInstance.delete("/api/withdrawal", {
         data: { id: loginUser?._id },
@@ -105,10 +99,6 @@ export const Header: FC = () => {
     }
   };
 
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-
   return (
     <>
       <Sheader>
@@ -139,90 +129,39 @@ export const Header: FC = () => {
               }}
             />
             {/* {loginUser ? (
-              <div>
-                ログイン済み
-                <Avatar
-                  alt={loginUser?.name}
-                  src={loginUser?.profilePhoto}
-                  sx={{ width: 40, height: 40 }}
-                />
-              </div>
-            ) : (
-              <div>ログインしていない</div>
-            )} */}
+                <div>
+                  ログイン済み
+                  <Avatar
+                    alt={loginUser?.name}
+                    src={loginUser?.profilePhoto}
+                    sx={{ width: 40, height: 40 }}
+                  />
+                </div>
+              ) : (
+                <div>ログインしていない</div>
+              )} */}
             <div>
-              {/* <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}> */}
-              <IconButton size="small" sx={{ ml: 2 }}>
-                <Avatar
-                  alt={loginUser?.name}
-                  src={loginUser?.profilePhoto}
-                  sx={{ width: 40, height: 40 }}
-                />
-              </IconButton>
-              <Menu
-                // anchorEl={anchorEl}
-                id="account-menu"
-                open={true}
-                // onClose={handleClose}
-                // onClick={handleClose}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
-                    "&:before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      top: 0,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
-                  },
-                }}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              <Button
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
               >
-                <MenuItem
-                // onClick={() => {
-                //   router.push("/profile");
-                //   handleClose();
-                // }}
-                >
-                  <ListItemIcon>
-                    <PersonIcon fontSize="small" />
-                  </ListItemIcon>
-                  マイページへ
-                </MenuItem>
-
-                <Divider />
-
-                <MenuItem onClick={logoutHandler}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  ログアウト
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={withdrawalHandler}>
-                  <ListItemIcon>
-                    <PersonOffIcon fontSize="small" />
-                  </ListItemIcon>
-                  <Typography sx={{ color: theme.palette.error.main }}>
-                    退会する
-                  </Typography>
-                </MenuItem>
+                Dashboard
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
             </div>
           </Grid>
