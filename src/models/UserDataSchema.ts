@@ -6,7 +6,7 @@ export type IUser = {
   oauthProviderId: string;
   name: string;
   email: string;
-  profilePhoto: String;
+  profilePhoto: string;
   gender: number;
   age: number;
   residence: number;

@@ -141,7 +141,7 @@ export const Header: FC = () => {
             {loginUser ? (
               <div>
                 ログイン済み
-                <img src={loginUser.profilePhoto} alt="" />
+                <Image src={loginUser.profilePhoto} alt="" />
               </div>
             ) : (
               <div>ログインしていない</div>
