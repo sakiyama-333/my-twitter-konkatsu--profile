@@ -29,9 +29,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       }
       setLoginUser(data);
     } catch (err) {
-      if (err instanceof AxiosError) {
-        router.push("/");
-      }
+      // TODO: 処理を記述する
+      // if (err instanceof AxiosError) {
+      //   router.push("/");
+      // }
     }
   };
 
