@@ -30,14 +30,14 @@ export const Header: FC = () => {
   const router = useRouter();
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
 
-  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  // const open = Boolean(anchorEl);
-  // const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const logoutHandler = async () => {
-    // handleClose();
+    handleClose();
     try {
       const res = await axiosInstance.delete("/api/logout");
       toast.success(res.data, {
@@ -70,7 +70,7 @@ export const Header: FC = () => {
   };
 
   const withdrawalHandler = async () => {
-    // handleClose();
+    handleClose();
     try {
       const res = await axiosInstance.delete("/api/withdrawal", {
         data: { id: loginUser?._id },
@@ -105,9 +105,9 @@ export const Header: FC = () => {
     }
   };
 
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -152,12 +152,12 @@ export const Header: FC = () => {
             )} */}
             <div>
               <IconButton
-                // onClick={handleClick}
+                onClick={handleClick}
                 size="small"
                 sx={{ ml: 2 }}
-                // aria-controls={open ? "account-menu" : undefined}
+                aria-controls={open ? "account-menu" : undefined}
                 aria-haspopup="true"
-                // aria-expanded={open ? "true" : undefined}
+                aria-expanded={open ? "true" : undefined}
               >
                 <Avatar
                   alt={loginUser?.name}
@@ -165,7 +165,7 @@ export const Header: FC = () => {
                   sx={{ width: 40, height: 40 }}
                 />
               </IconButton>
-              {/* <Menu
+              <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
@@ -201,10 +201,10 @@ export const Header: FC = () => {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <MenuItem
-                  onClick={() => {
-                    router.push("/profile");
-                    handleClose();
-                  }}
+                  // onClick={() => {
+                  //   router.push("/profile");
+                  //   handleClose();
+                  // }}
                 >
                   <ListItemIcon>
                     <PersonIcon fontSize="small" />
@@ -229,7 +229,7 @@ export const Header: FC = () => {
                     退会する
                   </Typography>
                 </MenuItem>
-              </Menu> */}
+              </Menu>
             </div>
           </Grid>
         </Container>
