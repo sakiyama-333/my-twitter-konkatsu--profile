@@ -138,8 +138,15 @@ export const Header: FC = () => {
                 color: theme.palette.customDarkGreen.main,
               }}
             />
-
-              {/* <div>
+            {loginUser ? (
+              <div>
+                ログイン済み
+                <img src={loginUser.profilePhoto} alt="" />
+              </div>
+            ) : (
+              <div>ログインしていない</div>
+            )}
+            {/* <div>
                 <IconButton
                   onClick={handleClick}
                   size="small"
@@ -220,7 +227,6 @@ export const Header: FC = () => {
                   </MenuItem>
                 </Menu>
               </div> */}
-
           </Grid>
         </Container>
       </Sheader>
