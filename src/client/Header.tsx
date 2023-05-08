@@ -24,12 +24,20 @@ export const Header: FC = () => {
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const profileHandler = () => {
+    router.push("/profile");
+    handleClose();
   };
 
   const logoutHandler = async () => {
@@ -62,6 +70,7 @@ export const Header: FC = () => {
         });
       }
     }
+    handleClose();
   };
 
   const withdrawalHandler = async () => {
@@ -97,6 +106,7 @@ export const Header: FC = () => {
         });
       }
     }
+    handleClose();
   };
 
   return (
@@ -128,18 +138,6 @@ export const Header: FC = () => {
                 color: theme.palette.customDarkGreen.main,
               }}
             />
-            {/* {loginUser ? (
-                <div>
-                  ログイン済み
-                  <Avatar
-                    alt={loginUser?.name}
-                    src={loginUser?.profilePhoto}
-                    sx={{ width: 40, height: 40 }}
-                  />
-                </div>
-              ) : (
-                <div>ログインしていない</div>
-              )} */}
             <div>
               <Button
                 id="basic-button"
@@ -148,7 +146,7 @@ export const Header: FC = () => {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                Dashboard
+                MENU
               </Button>
               <Menu
                 id="basic-menu"
@@ -159,9 +157,9 @@ export const Header: FC = () => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={profileHandler}>マイページへ</MenuItem>
+                <MenuItem onClick={logoutHandler}>ログアウトする</MenuItem>
+                <MenuItem onClick={withdrawalHandler}>退会する</MenuItem>
               </Menu>
             </div>
           </Grid>
