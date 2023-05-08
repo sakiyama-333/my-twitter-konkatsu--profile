@@ -161,12 +161,10 @@ export const Header: FC = () => {
                   <PersonIcon fontSize="small" sx={{ opacity: 0.5, mr: 1 }} />
                   マイページへ
                 </MenuItem>
-                <Divider />
                 <MenuItem onClick={logoutHandler}>
                   <Logout fontSize="small" sx={{ opacity: 0.5, mr: 1 }} />
                   ログアウトする
                 </MenuItem>
-                <Divider />
                 <MenuItem
                   onClick={withdrawalHandler}
                   sx={{ color: theme.palette.error.main }}
