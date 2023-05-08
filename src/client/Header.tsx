@@ -141,11 +141,10 @@ export const Header: FC = () => {
             {loginUser ? (
               <div>
                 ログイン済み
-                <Image
-                  src={loginUser.profilePhoto}
-                  alt=""
-                  width={70}
-                  height={70}
+                <Avatar
+                  alt={loginUser?.name}
+                  src={loginUser?.profilePhoto}
+                  sx={{ width: 40, height: 40 }}
                 />
               </div>
             ) : (
