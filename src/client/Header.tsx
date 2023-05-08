@@ -155,9 +155,6 @@ export const Header: FC = () => {
                 onClick={handleClick}
                 size="small"
                 sx={{ ml: 2 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
               >
                 <Avatar
                   alt={loginUser?.name}
@@ -166,7 +163,7 @@ export const Header: FC = () => {
                 />
               </IconButton>
               <Menu
-                anchorEl={anchorEl}
+                // anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
                 onClose={handleClose}
