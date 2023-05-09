@@ -14,7 +14,6 @@ import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { sendHttpRequest } from "../client/stopRenderSleep";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
@@ -39,15 +38,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     getUser();
-  }, []);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      console.log("Renderにリクエストを送信📧");
-      sendHttpRequest();
-    }, 600000);
-
-    return () => clearInterval(intervalId);
   }, []);
 
   return (
