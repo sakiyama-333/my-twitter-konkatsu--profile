@@ -22,10 +22,11 @@ const UserProfilePage: NextPage<
   return (
     //TODO:userがnullだったらエラーページを出す
 
-    <>
-      <SEO title={"ここにタイトル"} description="" />
-      <UserProfile {...user} />
-    </>
+        <>
+          <SEO title={"ここにタイトル"} description="" />
+          <UserProfile {...user} />
+        </>
+
   );
 };
 export default UserProfilePage;
@@ -33,30 +34,25 @@ export default UserProfilePage;
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
-  return {
-    props: {
-      user: null,
-    },
-  };
-  // const { params } = context;
-  // const mongoConnection = await connectMongo();
-  // const id = params!.id as string;
-  // try {
-  //   const user = await UserModel.findOne({ _id: id });
-  //   if (!user) throw new Error("ユーザーが見つかりませんでした");
-  //   return {
-  //     props: {
-  //       user: IUserToProfileDto(user),
-  //     },
-  //   };
-  // } catch (err) {
-  //   console.log(`😭${err}`);
-  //   return {
-  //     props: {
-  //       user: null,
-  //     },
-  //   };
-  // }
+  const { params } = context;
+  const mongoConnection = await connectMongo();
+  const id = params!.id as string;
+  try {
+    const user = await UserModel.findOne({ _id: id });
+    if (!user) throw new Error("ユーザーが見つかりませんでした");
+    return {
+      props: {
+        user: IUserToProfileDto(user),
+      },
+    };
+  } catch (err) {
+    console.log(`😭${err}`);
+    return {
+      props: {
+        user: null,
+      },
+    };
+  }
 };
 
 // const id = Array.isArray(params?.id) ? params?.id[0] : params.id
