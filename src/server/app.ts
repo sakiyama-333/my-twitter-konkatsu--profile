@@ -49,8 +49,8 @@ app.use(
 app.use("/auth", authRouter);
 
 if (!process.env.MONGO_URI) throw new Error("あかん");
-console.log("process.env.MONGO_URI: ", process.env.MONGO_URI)
-console.log("process.env.MONGO_URI type: ", typeof process.env.MONGO_URI)
+console.log("process.env.MONGO_URI: ", process.env.MONGO_URI);
+console.log("process.env.MONGO_URI type: ", typeof process.env.MONGO_URI);
 
 connectMongo();
 
@@ -113,6 +113,11 @@ app.delete("/api/withdrawal", async (req, res) => {
   } catch (err) {
     res.status(500).send("アカウント削除に失敗しました");
   }
+});
+
+// Renderのスリープ対策
+app.get("/api/render", async (req, res) => {
+  res.status(200).send("通信成功");
 });
 
 const PORT = process.env.PORT;
