@@ -74,7 +74,7 @@ export const UserList: FC = () => {
           return (
             <Grid xs={4} sm={4} md={4} key={user._id}>
               <Link
-                href={`/users/${user?._id}`}
+                href={`/users/profile?id=${user?.oauthProviderId}`}
                 style={{ textDecoration: "none" }}
               >
                 <Card

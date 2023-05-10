@@ -105,7 +105,7 @@ app.delete("/api/logout", async (req, res) => {
   }
 });
 
-app.delete("/api/withdrawal", async (req, res) => {
+app.delete("/api/withsdrawal", async (req, res) => {
   const id = req.body.id;
   try {
     await UserModel.deleteOne({ _id: id });
@@ -118,6 +118,18 @@ app.delete("/api/withdrawal", async (req, res) => {
 // Renderのスリープ対策
 app.get("/api/render", async (req, res) => {
   res.status(200).send("通信成功");
+});
+
+app.get("/api/users/profile", async (req, res) => {
+  if (!req.query) {
+    throw new Error("IDが見つかりません");
+  }
+  try {
+    const userData = await UserModel.findOne({ oauthProviderId: req.query.id });
+    res.status(200).json(userData);
+  } catch (err) {
+    console.log(`🧹${err}`);
+  }
 });
 
 const PORT = process.env.PORT;
