@@ -91,7 +91,7 @@ export const Profile: FC = () => {
           sx={{ width: "90%", display: "flex", justifyContent: "right", pt: 6 }}
         >
           <Link
-            href={`/users/${loginUser?._id}`}
+            href={`/users/profile?id=${loginUser?.oauthProviderId}`}
             style={{ textDecoration: "none" }}
           >
             <PrimaryButton>プロフィールを確認する</PrimaryButton>
