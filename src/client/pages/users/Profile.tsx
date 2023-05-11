@@ -21,7 +21,6 @@ export const UserProfile: FC = () => {
   const [user, setUser] = useState<IUser>();
   const { id } = router.query;
 
-  console.log(id);
   const getUser = async () => {
     try {
       const res = await axiosInstance.get(`/api/users/profile?id=${id}`);

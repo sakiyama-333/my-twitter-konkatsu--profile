@@ -53,7 +53,6 @@ export const UserList: FC = () => {
         <CircularProgress />
       </Box>
     );
-  console.log(user, "🙄");
 
   return (
     <Container maxWidth="md">
