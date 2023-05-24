@@ -1,15 +1,15 @@
 import type { NextPage } from "next";
 
 import { SEO } from "../client/SEO";
-import { UserList } from "../client/pages/UserList";
+import { Search } from "../client/pages/Search";
 
-const Users: NextPage = () => {
+const SearchPage: NextPage = () => {
   return (
     <>
       <SEO title={"ここにタイトル"} description="" />
-      <UserList />
+      <Search />
     </>
   );
 };
 
-export default Users;
+export default SearchPage;

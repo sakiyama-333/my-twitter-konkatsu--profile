@@ -1,5 +1,4 @@
-import { AxiosError } from "axios";
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
 import { useRouter } from "next/router";
 
 import { IUser } from "../../models/UserDataSchema";
@@ -7,7 +6,6 @@ import {
   Avatar,
   Box,
   Card,
-  CircularProgress,
   Container,
   Typography,
 } from "@mui/material";
@@ -16,44 +14,17 @@ import theme from "../theme/Color";
 import { RESIDENCE } from "./user/register/Residence";
 import { GENDER_ITEM } from "./user/register/Gender";
 import Link from "next/link";
-import { axiosInstance } from "../axiosInstance";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-// export type IProfile = Pick<
-//   IUser,
-//   "_id" | "name" | "profilePhoto" | "profilePhoto" | "gender" | "age" | "residence"
-// >;
+type Props = {
+  users: IUser[];
+};
 
-export const UserList: FC = () => {
-  const [user, setUser] = useState<IUser[]>();
+export const UserList: FC<Props> = ({ users }) => {
   const router = useRouter();
 
-  const getAllUsers = async () => {
-    try {
-      const res = await axiosInstance.get<IUser[]>('/api/users');
-      const users = res.data;
-      if (!users) return;
-      setUser(users);
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        // router.replace("/error"); //エラーが出た場合はエラーページに飛ばす
-        console.log(err.stack);
-        console.log(`🍵ゲットエラー${err}`);
-      }
-    }
-  };
-  useEffect(() => {
-    getAllUsers();
-  }, []);
-
-  if (!user)
-    return (
-      <Box sx={{ textAlign: "center", height: "100vh" }}>
-        <CircularProgress />
-      </Box>
-    );
-
+  if (!users.length) return null;
   return (
     <Container maxWidth="md">
       <h2>ユーザー一覧</h2>
@@ -62,7 +33,7 @@ export const UserList: FC = () => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {user.map((user) => {
+        {users.map((user) => {
           const prefName = RESIDENCE.find(
             (pref) => user?.residence === pref.code
           )?.name;
@@ -84,6 +55,7 @@ export const UserList: FC = () => {
                       transform: "translateY(-2px)",
                     },
                     transition: "all 0.3s ease-out",
+                    height: "100%",
                   }}
                 >
                   <Box>

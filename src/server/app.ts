@@ -14,6 +14,7 @@ import { authenticateJWT } from "./auth/authenticateJWT.middleware";
 import { validateRequestBodyByScheme } from "./validation/validationSchema";
 import { IUserSchema } from "./../zod/IUserSchema";
 import connectMongo from "./mongooseConnect";
+import { SearchUser } from "../client/pages/Search";
 
 const app = express();
 
@@ -132,8 +133,19 @@ app.get("/api/users/profile", async (req, res) => {
   }
 });
 
+app.post("/api/users/search", async (req, res) => {
+  const body = req.body as SearchUser
+  try {
+    const userData = await UserModel.find({ age: { $gte: body.fromAge, $lt: body.toAge} });
+    res.status(200).json(userData);
+  } catch (err) {
+    console.log(`🧹${err}`);
+  }
+});
+
 const PORT = process.env.PORT;
 if (!PORT) throw new Error("envファイルが読み込めていません");
 app.listen(PORT, () => {
   console.log(`💓Server start: http://localhost:${PORT}`);
 });
+

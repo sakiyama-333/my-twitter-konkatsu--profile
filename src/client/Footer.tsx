@@ -1,39 +1,46 @@
 import { FC } from "react";
 import Image from "next/image";
 import { Link, styled } from "@mui/material";
-import TwitterIcon from "@mui/icons-material/Twitter";
 
+import { BsTwitter, BsGithub } from "react-icons/bs";
 import theme from "./theme/Color";
 
 const linkItems = [
   {
     text: "トップ",
     link: "/",
+    AfterIcon: null,
   },
-  {
-    text: "使い方",
-    link: "about",
-  },
-  {
-    text: "ご意見",
-    link: "contact",
-  },
-  {
-    text: "利用規約",
-    link: "terms",
-  },
-  {
-    text: "プライバシーポリシー",
-    link: "privacy",
-  },
+  // {
+  //   text: "使い方",
+  //   link: "about",
+  // },
+  // {
+  //   text: "ご意見",
+  //   link: "contact",
+  // },
+  // {
+  //   text: "利用規約",
+  //   link: "terms",
+  // },
+  // {
+  //   text: "プライバシーポリシー",
+  //   link: "privacy",
+  // },
   {
     text: "作った人",
     link: "https://twitter.com/yamiko_333_dev",
+    AfterIcon: BsTwitter,
   },
   {
-    text: "職をください🙇",
-    link: "/",
+    text: "GitHub",
+    link: "https://github.com/yamiko-333/my-twitter-konkatsu--profile",
+    AfterIcon: BsGithub,
   },
+  // {
+  //   text: "職をください🙇",
+  //   link: "/",
+  // },
 ] as const;
 
 export const Footer: FC = () => {
@@ -42,32 +49,21 @@ export const Footer: FC = () => {
       <Sfooter>
         <Slayout>
           <Image src="/logo.svg" alt="logo image" width={120} height={120} />
-          <div className="linkItem">
-            {linkItems.map((item) => {
-              if (item.text !== "作った人") {
-                return (
-                  <Link
-                    href={item.link}
-                    key={item.text}
-                    color={theme.palette.customDarkGreen.main}
-                  >
-                    {item.text}
-                  </Link>
-                );
-              } else {
-                return (
-                  <Link
-                    href={item.link}
-                    key={item.text}
-                    color={theme.palette.customDarkGreen.main}
-                  >
-                    {item.text}
-                    <TwitterIcon />
-                  </Link>
-                );
-              }
+          <SlinkItem className="linkItem">
+            {linkItems.map(({ AfterIcon, link, text }) => {
+              return (
+                <SLink
+                  href={link}
+                  color={theme.palette.customDarkGreen.main}
+                  key={text}
+                >
+                  <span>{text}</span>
+                  <span>{AfterIcon && AfterIcon({})}</span>
+                  {/* {AfterIcon && <AfterIcon />} */}
+                </SLink>
+              );
             })}
-          </div>
+          </SlinkItem>
           <div className="logoAndCopyright">
             <small>&copy; 2023 TWIKON - ツイコン</small>
           </div>
@@ -93,23 +89,7 @@ const Slayout = styled("div")({
   gap: "24px",
   width: "90%",
   margin: "0 auto",
-  "& > .linkItem": {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "left",
-    alignItems: "center",
-    gap: "12px 24px",
-    "& > a": {
-      textDecoration: "none",
-      transition: "0.5s",
-      "&:hover": {
-        opacity: "0.5",
-      },
-      "& svg": {
-        verticalAlign: "-5px",
-      },
-    },
-  },
+
   "& .logoAndCopyright": {
     display: "flex",
     justifyContent: "space-between",
@@ -117,5 +97,27 @@ const Slayout = styled("div")({
     color: theme.palette.customDarkGreen.main,
     fontSize: "10px",
     textAlign: "center",
+  },
+});
+
+const SlinkItem = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  gap: "24px",
+});
+
+const SLink = styled(Link)({
+  display: "flex",
+  alignItems: "center",
+  gap: "5px",
+  textDecoration: "none",
+  transition: "0.5s",
+  "& > span": {
+    display: "flex",
+    alignItems: "flex-end",
+    "& > svg": {
+      height: "18px",
+      width: "18px",
+    },
   },
 });

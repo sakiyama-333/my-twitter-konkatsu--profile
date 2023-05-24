@@ -4,38 +4,53 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import {
   Avatar,
+  Box,
   Container,
   Divider,
   IconButton,
   ListItemIcon,
+  Modal,
   styled,
 } from "@mui/material";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Unstable_Grid2";
 import SearchIcon from "@mui/icons-material/Search";
-import PersonIcon from "@mui/icons-material/Person";
-import PersonOffIcon from "@mui/icons-material/PersonOff";
+import GoogleIcon from "@mui/icons-material/Google";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import theme from "./theme/Color";
 import { useAtom } from "jotai";
 import Link from "next/link";
-import { Logout } from "@mui/icons-material";
 import { loginUserAtom } from "./Atom";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { axiosInstance } from "./axiosInstance";
 import { toast } from "react-toastify";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import { MdPersonOff } from "react-icons/md";
+import { PrimaryButton } from "./CustomButton";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const Header: FC = () => {
   const router = useRouter();
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
   const open = Boolean(anchorEl);
+
+  const googleAuth = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.replace(`${API_URL}/auth/google`);
+  };
+
+  const twitterAuth = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.replace(`${API_URL}/auth/twitter`);
+  };
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -146,8 +161,11 @@ export const Header: FC = () => {
                 width: 32,
                 height: 32,
                 color: theme.palette.customDarkGreen.main,
+                cursor: "pointer",
               }}
+              onClick={() => router.push("/search")}
             />
+
             {loginUser ? (
               <div>
                 <IconButton
@@ -225,7 +243,52 @@ export const Header: FC = () => {
                 </Menu>
               </div>
             ) : (
-              <div></div>
+              <div>
+                <PrimaryButton
+                  type="submit"
+                  variant="contained"
+                  onClick={handleModalOpen}
+                  sx={{ ml: 3 }}
+                >
+                  ログイン
+                </PrimaryButton>
+                <Modal
+                  open={modalOpen}
+                  onClose={handleModalClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 5,
+                        p: "40px",
+                      }}
+                    >
+                      <PrimaryButton
+                        type="submit"
+                        variant="contained"
+                        onClick={googleAuth}
+                        sx={{ textAlign: "center", lineHeight: "1.5", gap: 2 }}
+                      >
+                        <GoogleIcon />
+                        GOOGLEでログイン
+                      </PrimaryButton>
+                      <PrimaryButton
+                        type="submit"
+                        variant="contained"
+                        onClick={twitterAuth}
+                        sx={{ textAlign: "center", lineHeight: "1.5", gap: 2 }}
+                      >
+                        <TwitterIcon />
+                        TWITTERでログイン
+                      </PrimaryButton>
+                    </Box>
+                  </Box>
+                </Modal>
+              </div>
             )}
           </Grid>
         </Container>
@@ -240,3 +303,24 @@ const Sheader = styled("header")({
   background: theme.palette.customMintGreen.main,
   borderTop: `5px solid ${theme.palette.customPink.main}`,
 });
+
+const SButton = styled("button")({
+  backgroundColor: "transparent",
+  border: "none",
+  cursor: "pointer",
+  outline: "none",
+  padding: 0,
+  appearance: "none",
+});
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  borderRadius: "8px",
+  boxShadow: 24,
+  p: 4,
+};
