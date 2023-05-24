@@ -106,7 +106,8 @@ app.delete("/api/logout", async (req, res) => {
   }
 });
 
-app.delete("/api/withsdrawal", async (req, res) => {
+app.delete("/api/withdrawal", async (req, res) => {
+  console.log(req.body.id, "🐾🐾");
   const id = req.body.id;
   try {
     await UserModel.deleteOne({ _id: id });
@@ -134,9 +135,11 @@ app.get("/api/users/profile", async (req, res) => {
 });
 
 app.post("/api/users/search", async (req, res) => {
-  const body = req.body as SearchUser
+  const body = req.body as SearchUser;
   try {
-    const userData = await UserModel.find({ age: { $gte: body.fromAge, $lt: body.toAge} });
+    const userData = await UserModel.find({
+      age: { $gte: body.fromAge, $lt: body.toAge },
+    });
     res.status(200).json(userData);
   } catch (err) {
     console.log(`🧹${err}`);
@@ -148,4 +151,3 @@ if (!PORT) throw new Error("envファイルが読み込めていません");
 app.listen(PORT, () => {
   console.log(`💓Server start: http://localhost:${PORT}`);
 });
-
